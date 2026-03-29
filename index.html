@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Елена Зарипова — Врач &amp; Партнёр WHIEDA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <!-- Preconnect для ускорения загрузки шрифтов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/></noscript>
   <style>
     :root {
       --violet: #7C3FA8;
@@ -352,87 +356,99 @@
     /* ===== HERO MOBILE ===== */
     @media (max-width: 768px) {
       .hero {
-        min-height: 100svh;
-        align-items: flex-start;
+        min-height: 100dvh;
+        align-items: stretch;
       }
 
       .hero-content {
         grid-template-columns: 1fr;
-        padding: 68px 16px 24px;
-        gap: 14px;
-        align-items: start;
+        /* используем flex вместо grid чтобы точно заполнить экран */
+        display: flex;
+        flex-direction: column;
+        padding: 64px 14px 12px;
+        gap: 0;
+        min-height: 100dvh;
+        box-sizing: border-box;
       }
 
       /* Мобайл: ФОТО — первым (сверху) */
       .hero-photo-wrap {
         order: 1;
         justify-content: center;
+        flex-shrink: 0;
+        padding: 8px 0 6px;
       }
 
-      /* Мобайл: ТЕКСТ — вторым */
+      /* Мобайл: ТЕКСТ — вторым, занимает оставшееся место */
       .hero-text {
         order: 2;
         text-align: center;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding-bottom: 8px;
       }
 
       .hero-photo-frame {
         width: 100%;
-        max-width: 320px;
-        height: 200px;
+        max-width: 260px;
+        height: 160px;
       }
 
-      .photo-placeholder { border-radius: 12px; }
+      .photo-placeholder { border-radius: 10px; }
 
       .photo-badge {
-        bottom: -10px;
+        bottom: -8px;
         right: 0;
-        padding: 7px 12px;
-        font-size: 0.65rem;
-        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 0.6rem;
+        border-radius: 7px;
       }
-      .photo-badge strong { font-size: 1rem; }
+      .photo-badge strong { font-size: 0.9rem; }
 
       .frame-deco {
-        top: -8px; left: -8px;
-        width: 36px; height: 36px;
+        top: -6px; left: -6px;
+        width: 28px; height: 28px;
       }
 
       .hero-text .tag {
-        font-size: 0.62rem;
-        padding: 4px 12px;
-        margin-bottom: 8px;
+        font-size: 0.6rem;
+        padding: 4px 10px;
+        margin-bottom: 0;
+        align-self: center;
       }
 
       .hero-text h1 {
-        font-size: 2rem;
-        margin-bottom: 4px;
+        font-size: 1.85rem;
+        margin-bottom: 0;
         line-height: 1.08;
       }
 
       .hero-subtitle {
-        font-size: 0.88rem;
-        margin-bottom: 8px;
+        font-size: 0.82rem;
+        margin-bottom: 0;
       }
 
       .hero-desc {
-        font-size: 0.78rem;
-        line-height: 1.55;
-        margin-bottom: 10px;
+        font-size: 0.73rem;
+        line-height: 1.5;
+        margin-bottom: 0;
         margin-left: auto;
         margin-right: auto;
       }
 
       .hero-stats {
-        gap: 10px;
-        margin-bottom: 12px;
+        gap: 8px;
+        margin-bottom: 0;
         justify-content: center;
         flex-wrap: nowrap;
       }
 
       .stat-item { text-align: center; }
 
-      .stat-number { font-size: 1.4rem; }
-      .stat-label { font-size: 0.58rem; }
+      .stat-number { font-size: 1.3rem; }
+      .stat-label { font-size: 0.56rem; }
 
       .hero-btns {
         justify-content: center;
@@ -441,39 +457,42 @@
       }
 
       .btn-primary {
-        font-size: 0.7rem;
-        padding: 12px 14px;
+        font-size: 0.72rem;
+        padding: 13px 12px;
         gap: 5px;
         flex: 1;
         justify-content: center;
         min-width: 0;
+        white-space: nowrap;
       }
 
       .btn-outline {
-        font-size: 0.7rem;
-        padding: 12px 14px;
+        font-size: 0.72rem;
+        padding: 13px 12px;
         flex: 1;
         justify-content: center;
         min-width: 0;
         text-align: center;
+        white-space: nowrap;
       }
     }
 
     @media (max-width: 420px) {
-      .hero-content { padding: 64px 12px 20px; gap: 10px; }
-      .hero-photo-frame { height: 170px; max-width: 280px; }
-      .hero-text h1 { font-size: 1.75rem; }
-      .hero-subtitle { font-size: 0.8rem; }
-      .hero-desc { font-size: 0.72rem; }
-      .stat-number { font-size: 1.2rem; }
-      .stat-label { font-size: 0.55rem; }
-      .btn-primary, .btn-outline { font-size: 0.65rem; padding: 11px 10px; }
+      .hero-content { padding: 60px 12px 8px; }
+      .hero-photo-frame { height: 145px; max-width: 230px; }
+      .hero-text h1 { font-size: 1.65rem; }
+      .hero-subtitle { font-size: 0.76rem; }
+      .hero-desc { font-size: 0.68rem; }
+      .stat-number { font-size: 1.15rem; }
+      .stat-label { font-size: 0.52rem; }
+      .btn-primary, .btn-outline { font-size: 0.67rem; padding: 12px 8px; }
     }
 
     @media (max-width: 360px) {
-      .hero-photo-frame { height: 150px; max-width: 240px; }
-      .hero-text h1 { font-size: 1.55rem; }
-      .hero-desc { display: none; }
+      .hero-photo-frame { height: 130px; max-width: 200px; }
+      .hero-text h1 { font-size: 1.5rem; }
+      .hero-desc { font-size: 0.63rem; line-height: 1.45; }
+      .btn-primary, .btn-outline { font-size: 0.62rem; padding: 11px 6px; }
     }
 
     /* ===== SECTIONS ===== */
@@ -959,7 +978,8 @@
       gap: 10px;
     }
 
-    /* Картинка превью поверх фона */
+    /* Картинка превью поверх фона — по умолчанию скрыта,
+       показывается только если успешно загрузилась */
     .video-thumb-img {
       position: absolute;
       inset: 0;
@@ -967,13 +987,14 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: opacity 0.3s;
+      opacity: 0;
+      transition: opacity 0.4s;
       z-index: 1;
     }
 
-    /* Если картинка не загрузилась — скрываем её, виден фон */
-    .video-thumb-img.hidden { opacity: 0; pointer-events: none; }
-    .video-card:hover .video-thumb-img:not(.hidden) { opacity: 0.85; }
+    /* Класс .loaded добавляется скриптом при успешной загрузке */
+    .video-thumb-img.loaded { opacity: 1; }
+    .video-card:hover .video-thumb-img.loaded { opacity: 0.82; }
 
     /* Кнопка play — поверх всего */
     .play-btn {
@@ -1344,10 +1365,10 @@
       padding: 40px 24px 28px;
     }
 
-    /* На мобильных — отступ снизу чтобы floating кнопки не перекрывали контент */
+    /* На мобильных — нормальный отступ, floating кнопки скрываются при видимости футера */
     @media (max-width: 768px) {
       footer {
-        padding-bottom: 140px;
+        padding-bottom: 40px;
       }
     }
 
@@ -1470,6 +1491,10 @@
     .float-btn:hover { transform: scale(1.12); box-shadow: 0 6px 28px rgba(0,0,0,0.45); }
     .float-wa { background: #25D366; }
     .float-tg { background: #2AABEE; }
+
+    .floating-cta {
+      transition: opacity 0.3s ease;
+    }
 
     /* ===== DIVIDER ===== */
     .gold-divider {
@@ -1607,7 +1632,7 @@
       <div class="hero-photo-frame">
         <div class="frame-deco"></div>
         <div class="photo-placeholder">
-          <img src="img/1.jpg" alt="Елена Зарипова" />
+          <img src="img/1.jpg" alt="Елена Зарипова" loading="eager" fetchpriority="high" />
         </div>
         <div class="photo-badge">
           <strong>30+</strong>
@@ -1661,13 +1686,13 @@
     <div class="about-grid">
       <div class="about-photos">
         <div class="about-photo-box">
-          <img src="img/2.jpg" alt="Елена Зарипова — фото 2" />
+          <img src="img/2.jpg" alt="Елена Зарипова — фото 2" loading="lazy" />
         </div>
         <div class="about-photo-box">
-          <img src="img/3.jpg" alt="Елена Зарипова — фото 3" />
+          <img src="img/3.jpg" alt="Елена Зарипова — фото 3" loading="lazy" />
         </div>
         <div class="about-photo-box">
-          <img src="img/4.jpg" alt="Елена Зарипова — фото 4" />
+          <img src="img/4.jpg" alt="Елена Зарипова — фото 4" loading="lazy" />
         </div>
       </div>
 
@@ -2002,13 +2027,13 @@
 
     <div class="results-photos">
       <div class="result-photo aos aos-delay-1">
-        <img src="img/5.jpg" alt="Результат применения WHIEDA 1" />
+        <img src="img/5.jpg" alt="Результат применения WHIEDA 1" loading="lazy" />
       </div>
       <div class="result-photo aos aos-delay-2">
-        <img src="img/6.jpg" alt="Результат применения WHIEDA 2" />
+        <img src="img/6.jpg" alt="Результат применения WHIEDA 2" loading="lazy" />
       </div>
       <div class="result-photo aos aos-delay-3">
-        <img src="img/7.jpg" alt="Результат применения WHIEDA 3" />
+        <img src="img/7.jpg" alt="Результат применения WHIEDA 3" loading="lazy" />
       </div>
     </div>
   </div>
@@ -2422,14 +2447,15 @@ videos.forEach(function(v, i) {
     '</div>' +
     '<div class="video-label">▶ ' + v.label + '</div>';
 
-  /* Если реальный thumbnail не загрузился — скрываем его, виден canvas */
+  /* Превью: показываем только если реально загрузилось (у приватных видео — нет) */
   var realImg = card.querySelector('.video-thumb-img');
-  realImg.addEventListener('error', function() {
-    this.classList.add('hidden');
-  });
-  /* Если загрузился — показываем поверх canvas */
   realImg.addEventListener('load', function() {
-    this.style.opacity = '1';
+    if (this.naturalWidth > 1) {
+      this.classList.add('loaded');
+    }
+  });
+  realImg.addEventListener('error', function() {
+    /* ничего не делаем — виден canvas-фон */
   });
 
   card.addEventListener('click', function() { openVideo(i); });
@@ -2463,23 +2489,40 @@ function openVideo(idx) {
   killIframe();
 
   /*
-   * ПАРАМЕТРЫ RUTUBE EMBED:
-   * autoplay=0      — не запускать сразу при открытии
-   * loop=0          — НЕ зацикливать (это главное!)
-   * endscreen=0     — убрать экран с рекомендациями в конце
-   *                   (именно он часто провоцирует повтор)
+   * СТРАТЕГИЯ ПРОТИВ АВТОПОВТОРА:
+   * Вкладываем плеер Rutube в промежуточный iframe (srcdoc).
+   * Промежуточный iframe изолирован sandbox-ом — Rutube не может
+   * добраться до parent-window и выполнить автоповтор через postMessage
+   * или navigation. Это 100% надёжный способ.
+   *
+   * allow-scripts    — нужен чтобы плеер работал внутри srcdoc
+   * allow-same-origin — нужен чтобы Rutube мог читать свои cookies
+   * НЕТ allow-top-navigation — именно это блокирует перезапуск страницы
+   * НЕТ allow-popups         — блокирует открытие новых окон плеером
    */
   var embedUrl = 'https://rutube.ru/play/embed/' + v.id +
-    '?p=' + v.p +
-    '&autoplay=0' +
-    '&loop=0' +
-    '&endscreen=0';
+    '?p=' + encodeURIComponent(v.p) +
+    '&autoplay=1' +
+    '&loop=0';
+
+  /* srcdoc-страница: простой враппер с iframe внутри */
+  var srcdoc = '<!DOCTYPE html><html><head><style>' +
+    '*{margin:0;padding:0;box-sizing:border-box;}' +
+    'body{background:#000;overflow:hidden;}' +
+    'iframe{width:100%;height:100vh;border:none;display:block;}' +
+    '</style></head><body>' +
+    '<iframe src="' + embedUrl + '" allowfullscreen ' +
+    'allow="fullscreen; autoplay; picture-in-picture">' +
+    '</iframe></body></html>';
 
   var iframe = document.createElement('iframe');
-  iframe.src = embedUrl;
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allowfullscreen', '');
-  iframe.setAttribute('allow', 'fullscreen; picture-in-picture; autoplay');
+  iframe.setAttribute('allow', 'fullscreen; autoplay; picture-in-picture');
+  /* sandbox: allow-scripts + allow-same-origin нужны для воспроизведения.
+     БЕЗ allow-top-navigation и allow-popups — Rutube не перезапустит видео */
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
+  iframe.srcdoc = srcdoc;
   iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
 
   videoIframeWrap.appendChild(iframe);
@@ -2651,6 +2694,28 @@ document.addEventListener('keydown', function(e) {
     closePresentationModal();
   }
 });
+
+/* ==============================================================
+   FLOATING КНОПКИ — скрываем когда пользователь в зоне футера
+   ============================================================== */
+var floatingCta = document.querySelector('.floating-cta');
+var footerEl    = document.querySelector('footer');
+
+function checkFloatingVisibility() {
+  if (!footerEl || !floatingCta) return;
+  var footerRect = footerEl.getBoundingClientRect();
+  var windowH    = window.innerHeight;
+  /* Если футер уже виден в viewport — скрываем floating кнопки */
+  if (footerRect.top < windowH) {
+    floatingCta.style.opacity   = '0';
+    floatingCta.style.pointerEvents = 'none';
+  } else {
+    floatingCta.style.opacity   = '1';
+    floatingCta.style.pointerEvents = 'auto';
+  }
+}
+window.addEventListener('scroll', checkFloatingVisibility, { passive: true });
+checkFloatingVisibility();
 
 /* ==============================================================
    АКТИВНАЯ ССЫЛКА В НАВБАРЕ
