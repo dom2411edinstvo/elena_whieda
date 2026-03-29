@@ -356,82 +356,88 @@
     /* ===== HERO MOBILE ===== */
     @media (max-width: 768px) {
       .hero {
-        min-height: 100dvh;
+        height: 100dvh;
+        min-height: 0;
         align-items: stretch;
+        overflow: hidden;
       }
 
       .hero-content {
         grid-template-columns: 1fr;
-        /* используем flex вместо grid чтобы точно заполнить экран */
         display: flex;
         flex-direction: column;
-        padding: 64px 14px 12px;
+        /* nav = 64px, низ = 12px */
+        padding: 70px 16px 12px;
         gap: 0;
-        min-height: 100dvh;
+        height: 100dvh;
         box-sizing: border-box;
+        overflow: hidden;
       }
 
-      /* Мобайл: ФОТО — первым (сверху) */
+      /* ФОТО — первым, фиксированная высота */
       .hero-photo-wrap {
         order: 1;
         justify-content: center;
         flex-shrink: 0;
-        padding: 8px 0 6px;
+        /* отступ под навбаром + красивый gap до текста */
+        padding: 10px 0 10px;
       }
 
-      /* Мобайл: ТЕКСТ — вторым, занимает оставшееся место */
+      /* ТЕКСТ — вторым, занимает оставшееся */
       .hero-text {
         order: 2;
         text-align: center;
         flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
-        padding-bottom: 8px;
+        justify-content: space-between;
+        padding-bottom: 4px;
+        overflow: hidden;
+        min-height: 0;
       }
 
       .hero-photo-frame {
-        width: 100%;
-        max-width: 260px;
-        height: 160px;
+        width: auto;
+        height: 220px;
+        max-width: 100%;
       }
 
-      .photo-placeholder { border-radius: 10px; }
+      .photo-placeholder { border-radius: 12px; }
 
       .photo-badge {
-        bottom: -8px;
-        right: 0;
-        padding: 5px 10px;
-        font-size: 0.6rem;
-        border-radius: 7px;
+        bottom: -10px;
+        right: -4px;
+        padding: 6px 12px;
+        font-size: 0.65rem;
+        border-radius: 8px;
       }
-      .photo-badge strong { font-size: 0.9rem; }
+      .photo-badge strong { font-size: 1rem; }
 
       .frame-deco {
-        top: -6px; left: -6px;
-        width: 28px; height: 28px;
+        top: -8px; left: -8px;
+        width: 32px; height: 32px;
       }
 
       .hero-text .tag {
-        font-size: 0.6rem;
-        padding: 4px 10px;
+        font-size: 0.62rem;
+        padding: 4px 12px;
         margin-bottom: 0;
         align-self: center;
       }
 
       .hero-text h1 {
-        font-size: 1.85rem;
+        font-size: 1.9rem;
         margin-bottom: 0;
-        line-height: 1.08;
+        line-height: 1.05;
       }
 
       .hero-subtitle {
-        font-size: 0.82rem;
+        font-size: 0.85rem;
         margin-bottom: 0;
       }
 
       .hero-desc {
-        font-size: 0.73rem;
+        font-size: 0.75rem;
         line-height: 1.5;
         margin-bottom: 0;
         margin-left: auto;
@@ -439,60 +445,66 @@
       }
 
       .hero-stats {
-        gap: 8px;
+        gap: 10px;
         margin-bottom: 0;
         justify-content: center;
         flex-wrap: nowrap;
       }
 
       .stat-item { text-align: center; }
-
-      .stat-number { font-size: 1.3rem; }
-      .stat-label { font-size: 0.56rem; }
+      .stat-number { font-size: 1.35rem; }
+      .stat-label { font-size: 0.58rem; }
 
       .hero-btns {
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
         flex-wrap: nowrap;
       }
 
       .btn-primary {
-        font-size: 0.72rem;
-        padding: 13px 12px;
-        gap: 5px;
+        font-size: 0.78rem;
+        padding: 14px 14px;
+        gap: 6px;
         flex: 1;
         justify-content: center;
         min-width: 0;
         white-space: nowrap;
+        letter-spacing: 0.04em;
       }
 
       .btn-outline {
-        font-size: 0.72rem;
-        padding: 13px 12px;
+        font-size: 0.78rem;
+        padding: 14px 14px;
         flex: 1;
         justify-content: center;
         min-width: 0;
         text-align: center;
         white-space: nowrap;
+        letter-spacing: 0.04em;
       }
     }
 
+    /* Маленькие телефоны 390px и ниже */
     @media (max-width: 420px) {
-      .hero-content { padding: 60px 12px 8px; }
-      .hero-photo-frame { height: 145px; max-width: 230px; }
-      .hero-text h1 { font-size: 1.65rem; }
-      .hero-subtitle { font-size: 0.76rem; }
-      .hero-desc { font-size: 0.68rem; }
-      .stat-number { font-size: 1.15rem; }
-      .stat-label { font-size: 0.52rem; }
-      .btn-primary, .btn-outline { font-size: 0.67rem; padding: 12px 8px; }
+      .hero-content { padding: 68px 14px 10px; }
+      .hero-photo-frame { height: 195px; }
+      .hero-text h1 { font-size: 1.7rem; }
+      .hero-subtitle { font-size: 0.78rem; }
+      .hero-desc { font-size: 0.7rem; }
+      .stat-number { font-size: 1.2rem; }
+      .stat-label { font-size: 0.54rem; }
+      .btn-primary, .btn-outline { font-size: 0.72rem; padding: 13px 10px; }
     }
 
     @media (max-width: 360px) {
-      .hero-photo-frame { height: 130px; max-width: 200px; }
+      .hero-content { padding: 66px 12px 8px; }
+      .hero-photo-frame { height: 170px; }
       .hero-text h1 { font-size: 1.5rem; }
-      .hero-desc { font-size: 0.63rem; line-height: 1.45; }
-      .btn-primary, .btn-outline { font-size: 0.62rem; padding: 11px 6px; }
+      .hero-subtitle { font-size: 0.72rem; }
+      .hero-desc { font-size: 0.65rem; line-height: 1.45; }
+      .stat-number { font-size: 1.1rem; }
+      .stat-label { font-size: 0.5rem; }
+      .btn-primary, .btn-outline { font-size: 0.67rem; padding: 12px 8px; }
     }
 
     /* ===== SECTIONS ===== */
@@ -967,19 +979,18 @@
       .video-thumb { height: 220px; }
     }
 
-    /* Красивый плейсхолдер — всегда виден как фон */
-    .video-thumb-bg {
+    /* Canvas-превью — занимает весь контейнер, всегда виден */
+    .video-thumb-canvas {
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      z-index: 0;
     }
 
-    /* Картинка превью поверх фона — по умолчанию скрыта,
-       показывается только если успешно загрузилась */
+    /* Реальное превью поверх canvas — по умолчанию скрыто */
     .video-thumb-img {
       position: absolute;
       inset: 0;
@@ -992,7 +1003,6 @@
       z-index: 1;
     }
 
-    /* Класс .loaded добавляется скриптом при успешной загрузке */
     .video-thumb-img.loaded { opacity: 1; }
     .video-card:hover .video-thumb-img.loaded { opacity: 0.82; }
 
@@ -2354,61 +2364,59 @@ var videos = [
 ];
 
 /* ==============================================================
-   ГЕНЕРАЦИЯ ПРЕВЬЮ — рисуем canvas с лого Rutube
-   Это 100% работает на мобильных без сетевых запросов
+   ГЕНЕРАЦИЯ ПРЕВЬЮ — рисуем canvas с градиентом и лого Rutube
+   Работает везде: десктоп, мобайл, iOS, Android
    ============================================================== */
-function makePreviewDataUrl(num) {
-  var c = document.createElement('canvas');
-  c.width = 400; c.height = 225;
-  var ctx = c.getContext('2d');
+function drawPreviewCanvas(canvas, num) {
+  var W = canvas.width, H = canvas.height;
+  var ctx = canvas.getContext('2d');
 
   /* фон — градиент */
-  var g = ctx.createLinearGradient(0, 0, 400, 225);
-  g.addColorStop(0,   '#2D1B4E');
-  g.addColorStop(0.5, '#4A1A6B');
-  g.addColorStop(1,   '#6B1A3A');
+  var g = ctx.createLinearGradient(0, 0, W, H);
+  g.addColorStop(0,    '#1A0A2E');
+  g.addColorStop(0.45, '#3D1060');
+  g.addColorStop(1,    '#6B1A3A');
   ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 400, 225);
+  ctx.fillRect(0, 0, W, H);
 
-  /* оранжевый квадрат с закруглением — логотип Rutube */
-  var rx = 160, ry = 45, rw = 80, rh = 80, radius = 14;
+  /* декоративная сетка */
+  ctx.strokeStyle = 'rgba(176,111,224,0.18)';
+  ctx.lineWidth = 1;
+  var step = 36;
+  for (var x = 0; x < W; x += step) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (var y = 0; y < H; y += step) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  /* оранжевый квадрат Rutube — по центру, чуть выше середины */
+  var rw = 72, rh = 72, rx = (W - rw) / 2, ry = H / 2 - rh / 2 - 14, r = 12;
   ctx.beginPath();
-  ctx.moveTo(rx + radius, ry);
-  ctx.lineTo(rx + rw - radius, ry);
-  ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + radius);
-  ctx.lineTo(rx + rw, ry + rh - radius);
-  ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - radius, ry + rh);
-  ctx.lineTo(rx + radius, ry + rh);
-  ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - radius);
-  ctx.lineTo(rx, ry + radius);
-  ctx.quadraticCurveTo(rx, ry, rx + radius, ry);
+  ctx.moveTo(rx + r, ry);
+  ctx.lineTo(rx + rw - r, ry);
+  ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + r);
+  ctx.lineTo(rx + rw, ry + rh - r);
+  ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - r, ry + rh);
+  ctx.lineTo(rx + r, ry + rh);
+  ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - r);
+  ctx.lineTo(rx, ry + r);
+  ctx.quadraticCurveTo(rx, ry, rx + r, ry);
   ctx.closePath();
   ctx.fillStyle = '#FF4300';
   ctx.fill();
 
-  /* буква R внутри квадрата */
+  /* буква R */
   ctx.fillStyle = '#fff';
-  ctx.font = 'bold 42px Arial';
+  ctx.font = 'bold 38px Arial, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('R', rx + rw / 2, ry + rh / 2 + 2);
 
-  /* подпись "Видеоотзыв N" */
-  ctx.fillStyle = 'rgba(255,255,255,0.7)';
-  ctx.font = '16px Arial';
-  ctx.fillText('Видеоотзыв ' + num, 200, 158);
-
-  /* тонкие декоративные линии */
-  ctx.strokeStyle = 'rgba(176,111,224,0.25)';
-  ctx.lineWidth = 1;
-  for (var i = 0; i < 400; i += 40) {
-    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 225); ctx.stroke();
-  }
-  for (var j = 0; j < 225; j += 40) {
-    ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(400, j); ctx.stroke();
-  }
-
-  return c.toDataURL('image/png');
+  /* подпись */
+  ctx.fillStyle = 'rgba(255,255,255,0.65)';
+  ctx.font = '14px Arial, sans-serif';
+  ctx.fillText('\u25B6 \u0412\u0438\u0434\u0435\u043E\u043E\u0442\u0437\u044B\u0432 ' + num, W / 2, ry + rh + 22);
 }
 
 /* ==============================================================
@@ -2421,42 +2429,28 @@ videos.forEach(function(v, i) {
   if (i % 3 === 1) delayClass = ' aos-delay-1';
   if (i % 3 === 2) delayClass = ' aos-delay-2';
 
-  /* canvas-превью — всегда отображается */
-  var previewDataUrl = makePreviewDataUrl(i + 1);
-
-  /* Пробуем также загрузить реальный thumbnail с Rutube.
-     Если загрузится — заменим canvas-превью.
-     Если нет (приватные видео) — останется canvas. */
-  var thumbUrl = 'https://rutube.ru/api/video/' + v.id + '/thumbnail/?redirect=1&t=' + Date.now();
-
   var card = document.createElement('div');
   card.className = 'video-card aos' + delayClass;
-
   card.innerHTML =
     '<div class="video-thumb">' +
-      /* canvas-превью как базовый фон */
-      '<div class="video-thumb-bg">' +
-        '<img src="' + previewDataUrl + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" alt="" />' +
-      '</div>' +
-      /* реальное превью поверх (если загрузится) */
-      '<img class="video-thumb-img" src="' + thumbUrl + '" alt="Видеоотзыв ' + (i+1) + '" loading="lazy" />' +
-      /* кнопка play поверх всего */
-      '<div class="play-btn">' +
-        '<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>' +
-      '</div>' +
+      '<canvas class="video-thumb-canvas" width="320" height="180"></canvas>' +
+      '<img class="video-thumb-img" alt="Видеоотзыв ' + (i+1) + '" loading="lazy" />' +
+      '<div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>' +
     '</div>' +
-    '<div class="video-label">▶ ' + v.label + '</div>';
+    '<div class="video-label">\u25B6 ' + v.label + '</div>';
 
-  /* Превью: показываем только если реально загрузилось (у приватных видео — нет) */
+  /* Рисуем canvas сразу после вставки в DOM */
+  var canvas = card.querySelector('.video-thumb-canvas');
+  drawPreviewCanvas(canvas, i + 1);
+
+  /* Пробуем загрузить реальный thumbnail (для публичных видео) */
   var realImg = card.querySelector('.video-thumb-img');
+  var thumbUrl = 'https://rutube.ru/api/video/' + v.id + '/thumbnail/?redirect=1';
+  realImg.src = thumbUrl;
   realImg.addEventListener('load', function() {
-    if (this.naturalWidth > 1) {
-      this.classList.add('loaded');
-    }
+    if (this.naturalWidth > 1) this.classList.add('loaded');
   });
-  realImg.addEventListener('error', function() {
-    /* ничего не делаем — виден canvas-фон */
-  });
+  /* При ошибке (приватное видео) — просто оставляем canvas */
 
   card.addEventListener('click', function() { openVideo(i); });
   grid.appendChild(card);
@@ -2464,66 +2458,76 @@ videos.forEach(function(v, i) {
 
 /* ==============================================================
    ВИДЕО МОДАЛКА
-   КЛЮЧЕВОЕ: autoplay=0, НЕТ loop, НЕТ postMessage-обработчика.
-   Rutube НЕ будет перезапускать видео сам — это поведение плеера
-   когда loop не задан. Мы также не слушаем никаких событий и
-   не вмешиваемся в работу плеера — видео просто останавливается
-   по окончании, как и должно.
+   Против автоповтора: слушаем postMessage от Rutube-плеера.
+   Когда плеер сообщает об окончании (state=stopped/ended/finished)
+   — заменяем iframe на заглушку с кнопкой переигрывания.
    ============================================================== */
-var videoModal     = document.getElementById('videoModal');
+var videoModal      = document.getElementById('videoModal');
 var videoIframeWrap = document.getElementById('videoIframeWrap');
 var videoModalClose = document.getElementById('videoModalClose');
+var currentVideoIdx = -1;
 
 function killIframe() {
+  window.removeEventListener('message', onRutubeMsg);
   var old = videoIframeWrap.querySelector('iframe');
-  if (old) {
-    /* src = about:blank — гарантированно останавливает воспроизведение */
-    old.src = 'about:blank';
-    old.remove();
-  }
+  if (old) { old.src = 'about:blank'; old.remove(); }
   videoIframeWrap.innerHTML = '';
+}
+
+function showEndedScreen(idx) {
+  window.removeEventListener('message', onRutubeMsg);
+  var old = videoIframeWrap.querySelector('iframe');
+  if (old) { old.src = 'about:blank'; old.remove(); }
+  /* Показываем заглушку "видео завершено" с кнопкой переигрывания */
+  videoIframeWrap.innerHTML =
+    '<div style="position:absolute;inset:0;display:flex;flex-direction:column;' +
+    'align-items:center;justify-content:center;gap:16px;' +
+    'background:linear-gradient(135deg,#1A0A2E,#2D1B4E);">' +
+      '<div style="font-size:3rem;">✅</div>' +
+      '<div style="color:rgba(255,255,255,0.7);font-size:0.95rem;">Видео завершено</div>' +
+      '<button onclick="openVideo(' + idx + ')" ' +
+        'style="background:linear-gradient(135deg,#C0392B,#7C3FA8);color:#fff;border:none;' +
+        'border-radius:8px;padding:12px 28px;font-size:0.88rem;cursor:pointer;' +
+        'letter-spacing:0.05em;">▶ Смотреть снова</button>' +
+    '</div>';
+}
+
+function onRutubeMsg(e) {
+  try {
+    var d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+    if (!d) return;
+    var type  = (d.type  || d.event || '').toLowerCase();
+    var state = (d.state || (d.data && (d.data.state || d.data.type)) || '').toLowerCase();
+    /* Rutube посылает разные события: player:currentTime при воспроизведении,
+       при окончании — state меняется на stopped / ended / finished */
+    var ended = state === 'stopped' || state === 'ended' || state === 'finished' ||
+                state === 'complete' || type === 'player:ended' || type === 'ended' ||
+                type === 'player:complete' || type === 'player:stopped';
+    if (ended) showEndedScreen(currentVideoIdx);
+  } catch(err) {}
 }
 
 function openVideo(idx) {
   var v = videos[idx];
+  currentVideoIdx = idx;
   killIframe();
 
-  /*
-   * СТРАТЕГИЯ ПРОТИВ АВТОПОВТОРА:
-   * Вкладываем плеер Rutube в промежуточный iframe (srcdoc).
-   * Промежуточный iframe изолирован sandbox-ом — Rutube не может
-   * добраться до parent-window и выполнить автоповтор через postMessage
-   * или navigation. Это 100% надёжный способ.
-   *
-   * allow-scripts    — нужен чтобы плеер работал внутри srcdoc
-   * allow-same-origin — нужен чтобы Rutube мог читать свои cookies
-   * НЕТ allow-top-navigation — именно это блокирует перезапуск страницы
-   * НЕТ allow-popups         — блокирует открытие новых окон плеером
-   */
+  /* Прямой embed — без srcdoc-обёртки (она мешала postMessage) */
   var embedUrl = 'https://rutube.ru/play/embed/' + v.id +
     '?p=' + encodeURIComponent(v.p) +
     '&autoplay=1' +
-    '&loop=0';
-
-  /* srcdoc-страница: простой враппер с iframe внутри */
-  var srcdoc = '<!DOCTYPE html><html><head><style>' +
-    '*{margin:0;padding:0;box-sizing:border-box;}' +
-    'body{background:#000;overflow:hidden;}' +
-    'iframe{width:100%;height:100vh;border:none;display:block;}' +
-    '</style></head><body>' +
-    '<iframe src="' + embedUrl + '" allowfullscreen ' +
-    'allow="fullscreen; autoplay; picture-in-picture">' +
-    '</iframe></body></html>';
+    '&loop=0' +
+    '&endscreen=0';
 
   var iframe = document.createElement('iframe');
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allowfullscreen', '');
   iframe.setAttribute('allow', 'fullscreen; autoplay; picture-in-picture');
-  /* sandbox: allow-scripts + allow-same-origin нужны для воспроизведения.
-     БЕЗ allow-top-navigation и allow-popups — Rutube не перезапустит видео */
-  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-presentation');
-  iframe.srcdoc = srcdoc;
+  iframe.src = embedUrl;
   iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+
+  /* Слушаем postMessage от плеера */
+  window.addEventListener('message', onRutubeMsg);
 
   videoIframeWrap.appendChild(iframe);
   videoModal.classList.add('open');
@@ -2534,6 +2538,7 @@ function closeVideo() {
   killIframe();
   videoModal.classList.remove('open');
   document.body.style.overflow = '';
+  currentVideoIdx = -1;
 }
 
 videoModalClose.addEventListener('click', closeVideo);
