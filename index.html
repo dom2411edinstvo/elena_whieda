@@ -1037,6 +1037,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      z-index: 1;            /* поверх фона, под кнопкой play */
       transition: transform 0.3s;
     }
 
@@ -1871,7 +1872,7 @@
       </div>
 
       <!-- ВИДЕО — правая колонка -->
-      <div class="company-video-wrap aos aos-delay-2">
+      <div class="company-video-wrap">
         <div class="company-video-label">
           <span class="company-video-icon">▶</span>
           Официальная презентация WHIEDA
@@ -1880,12 +1881,25 @@
              data-video-id="ccdb10c5a7dfbe27654eb936cb00899e"
              data-p="eaJ-tpIPjjXD5aOxXTeJtg">
           <div class="rt-preview">
-            <img src="https://rutube.ru/api/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbnail/?redirect=1&p=eaJ-tpIPjjXD5aOxXTeJtg"
+            <img id="companyThumb"
+                 src="https://rutube.ru/api/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbnail/?redirect=1&p=eaJ-tpIPjjXD5aOxXTeJtg"
                  alt="Презентация компании WHIEDA"
-                 loading="lazy" decoding="async"
-                 onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbs/m.jpg';">
+                 loading="eager"
+                 decoding="async"
+                 onerror="
+                   console.error('THUMB ERR step', this.dataset.step, this.src);
+                   var s = parseInt(this.dataset.step||0)+1;
+                   this.dataset.step = s;
+                   if(s===1){ this.src='https://pic.rutube.ru/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbs/m.jpg'; }
+                   else if(s===2){ this.src='https://pic.rutube.ru/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbs/s.jpg'; }
+                   else { this.style.display='none'; document.getElementById('companyThumbDebug').textContent='❌ Все варианты превью недоступны'; }
+                 "
+                 onload="document.getElementById('companyThumbDebug').textContent='✅ Превью: '+this.src;">
             <div class="rt-play"><span></span></div>
           </div>
+        </div>
+        <div id="companyThumbDebug" style="font-size:0.7rem;color:#999;margin-top:4px;word-break:break-all;padding:0 4px;">
+          Загрузка превью...
         </div>
       </div>
 
