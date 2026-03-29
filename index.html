@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Елена Зарипова — Врач &amp; Партнёр WHIEDA</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -22,9 +21,6 @@
       --dark: #1A0A2E;
       --charcoal: #2D1B4E;
       --muted: #7A5898;
-      --gold: #B06FE0;
-      --gold-light: #D4A0F5;
-      --gold-dark: #7C3FA8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
@@ -43,7 +39,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      background: rgba(253,248,255,0.95);
+      background: rgba(253,248,255,0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(124,63,168,0.2);
       transition: box-shadow 0.3s;
@@ -57,7 +53,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 68px;
+      height: 64px;
     }
 
     .nav-logo {
@@ -70,11 +66,11 @@
     }
     .nav-logo span { color: var(--violet); }
 
-    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
     .nav-links a {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
@@ -103,23 +99,23 @@
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 68px; left: 0; right: 0;
+      top: 64px; left: 0; right: 0;
       background: var(--cream);
       border-bottom: 1px solid rgba(124,63,168,0.2);
       z-index: 999;
-      padding: 16px 24px 24px;
+      padding: 12px 24px 20px;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       color: var(--charcoal);
       text-decoration: none;
-      padding: 10px 0;
+      padding: 9px 0;
       border-bottom: 1px solid rgba(124,63,168,0.12);
     }
     .mobile-menu a:last-child { border-bottom: none; }
@@ -170,169 +166,9 @@
       width: 100%;
     }
 
-    /* ===== HERO MOBILE ===== */
-    @media (max-width: 768px) {
-      .hero {
-        min-height: 100svh;
-        height: 100svh;
-        align-items: flex-start;
-      }
-
-      .hero-content {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        padding: 72px 16px 16px;
-        gap: 12px;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
-
-      /* Фото — первым */
-      .hero-photo-wrap {
-        order: -1;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .hero-photo-frame {
-        width: 100%;
-        max-width: 100%;
-        height: 220px;
-      }
-
-      .photo-placeholder {
-        border-radius: 12px;
-        height: 100%;
-      }
-
-      .photo-badge {
-        bottom: -10px;
-        right: 8px;
-        padding: 8px 12px;
-        font-size: 0.68rem;
-        border-radius: 8px;
-      }
-
-      .photo-badge strong {
-        font-size: 1.1rem;
-      }
-
-      .frame-deco {
-        top: -8px;
-        left: -8px;
-        width: 40px;
-        height: 40px;
-      }
-
-      /* Текстовый блок — вторым */
-      .hero-text {
-        order: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        flex: 1;
-      }
-
-      .hero-text .tag {
-        font-size: 0.62rem;
-        padding: 4px 10px;
-        margin-bottom: 6px;
-      }
-
-      .hero-text h1 {
-        font-size: 1.9rem;
-        margin-bottom: 2px;
-        line-height: 1.05;
-      }
-
-      .hero-subtitle {
-        font-size: 0.85rem;
-        margin-bottom: 6px;
-      }
-
-      .hero-desc {
-        font-size: 0.78rem;
-        line-height: 1.5;
-        margin-bottom: 8px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-stats {
-        gap: 10px;
-        margin-bottom: 10px;
-        justify-content: center;
-        flex-wrap: nowrap;
-      }
-
-      .stat-number {
-        font-size: 1.4rem;
-      }
-
-      .stat-label {
-        font-size: 0.6rem;
-      }
-
-      .hero-btns {
-        justify-content: center;
-        gap: 8px;
-        flex-wrap: nowrap;
-      }
-
-      .btn-primary {
-        font-size: 0.72rem;
-        padding: 11px 14px;
-        gap: 5px;
-        white-space: nowrap;
-        flex: 1;
-        justify-content: center;
-        min-width: 0;
-        max-width: calc(50% - 4px);
-      }
-
-      .btn-outline {
-        font-size: 0.72rem;
-        padding: 11px 14px;
-        white-space: nowrap;
-        flex: 1;
-        justify-content: center;
-        min-width: 0;
-        max-width: calc(50% - 4px);
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-content {
-        padding: 68px 12px 12px;
-        gap: 10px;
-      }
-
-      .hero-photo-frame {
-        height: 190px;
-      }
-
-      .hero-text h1 {
-        font-size: 1.65rem;
-      }
-
-      .hero-desc {
-        font-size: 0.73rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .hero-photo-frame { height: 160px; }
-      .hero-text h1 { font-size: 1.45rem; }
-      .hero-subtitle { font-size: 0.78rem; }
-      .hero-stats { gap: 6px; }
-      .stat-number { font-size: 1.2rem; }
-    }
+    /* ===== HERO DESKTOP: текст слева, фото справа ===== */
+    .hero-text { order: 1; }
+    .hero-photo-wrap { order: 2; }
 
     .hero-text .tag {
       display: inline-flex;
@@ -385,7 +221,6 @@
     }
 
     .stat-item { text-align: left; }
-    @media (max-width: 768px) { .stat-item { text-align: center; } }
 
     .stat-number {
       font-family: 'Cormorant Garamond', serif;
@@ -423,6 +258,7 @@
       text-decoration: none;
       transition: all 0.3s;
       box-shadow: 0 4px 20px rgba(192,57,43,0.4);
+      white-space: nowrap;
     }
     .btn-primary:hover {
       transform: translateY(-2px);
@@ -444,6 +280,7 @@
       border: 1px solid rgba(255,255,255,0.25);
       text-decoration: none;
       transition: all 0.3s;
+      white-space: nowrap;
     }
     .btn-outline:hover {
       border-color: var(--yellow-light);
@@ -510,6 +347,133 @@
       border-top: 2px solid rgba(245,197,24,0.4);
       border-left: 2px solid rgba(245,197,24,0.4);
       border-radius: 4px 0 0 0;
+    }
+
+    /* ===== HERO MOBILE ===== */
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 100svh;
+        align-items: flex-start;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        padding: 68px 16px 24px;
+        gap: 14px;
+        align-items: start;
+      }
+
+      /* Мобайл: ФОТО — первым (сверху) */
+      .hero-photo-wrap {
+        order: 1;
+        justify-content: center;
+      }
+
+      /* Мобайл: ТЕКСТ — вторым */
+      .hero-text {
+        order: 2;
+        text-align: center;
+      }
+
+      .hero-photo-frame {
+        width: 100%;
+        max-width: 320px;
+        height: 200px;
+      }
+
+      .photo-placeholder { border-radius: 12px; }
+
+      .photo-badge {
+        bottom: -10px;
+        right: 0;
+        padding: 7px 12px;
+        font-size: 0.65rem;
+        border-radius: 8px;
+      }
+      .photo-badge strong { font-size: 1rem; }
+
+      .frame-deco {
+        top: -8px; left: -8px;
+        width: 36px; height: 36px;
+      }
+
+      .hero-text .tag {
+        font-size: 0.62rem;
+        padding: 4px 12px;
+        margin-bottom: 8px;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+        margin-bottom: 4px;
+        line-height: 1.08;
+      }
+
+      .hero-subtitle {
+        font-size: 0.88rem;
+        margin-bottom: 8px;
+      }
+
+      .hero-desc {
+        font-size: 0.78rem;
+        line-height: 1.55;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-stats {
+        gap: 10px;
+        margin-bottom: 12px;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+
+      .stat-item { text-align: center; }
+
+      .stat-number { font-size: 1.4rem; }
+      .stat-label { font-size: 0.58rem; }
+
+      .hero-btns {
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+      }
+
+      .btn-primary {
+        font-size: 0.7rem;
+        padding: 12px 14px;
+        gap: 5px;
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .btn-outline {
+        font-size: 0.7rem;
+        padding: 12px 14px;
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hero-content { padding: 64px 12px 20px; gap: 10px; }
+      .hero-photo-frame { height: 170px; max-width: 280px; }
+      .hero-text h1 { font-size: 1.75rem; }
+      .hero-subtitle { font-size: 0.8rem; }
+      .hero-desc { font-size: 0.72rem; }
+      .stat-number { font-size: 1.2rem; }
+      .stat-label { font-size: 0.55rem; }
+      .btn-primary, .btn-outline { font-size: 0.65rem; padding: 11px 10px; }
+    }
+
+    @media (max-width: 360px) {
+      .hero-photo-frame { height: 150px; max-width: 240px; }
+      .hero-text h1 { font-size: 1.55rem; }
+      .hero-desc { display: none; }
     }
 
     /* ===== SECTIONS ===== */
@@ -764,10 +728,8 @@
     .tech-visual::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 200%;
-      height: 200%;
+      top: -50%; right: -50%;
+      width: 200%; height: 200%;
       background: radial-gradient(circle at center, rgba(176,111,224,0.08) 0%, transparent 60%);
     }
 
@@ -803,8 +765,7 @@
     .tech-fact { display: flex; gap: 12px; align-items: flex-start; }
 
     .tech-fact-dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--yellow);
       margin-top: 6px;
@@ -900,7 +861,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
       margin-top: 40px;
-      margin-bottom: 60px;
     }
     @media (max-width: 640px) {
       .results-photos { grid-template-columns: 1fr; }
@@ -973,57 +933,52 @@
 
     .video-card:hover { border-color: rgba(245,197,24,0.5); transform: translateY(-3px); }
 
+    /* Превью контейнер */
     .video-thumb {
       height: 180px;
-      background: linear-gradient(135deg, #2D1B4E, #1A0A2E);
+      position: relative;
+      overflow: hidden;
+      background: #1A0A2E;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
     }
 
     @media (max-width: 560px) {
-      .video-thumb {
-        height: 210px;
-      }
+      .video-thumb { height: 220px; }
     }
 
+    /* Красивый плейсхолдер — всегда виден как фон */
+    .video-thumb-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    /* Картинка превью поверх фона */
     .video-thumb-img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 1;
-      transition: opacity 0.3s;
       display: block;
-    }
-    .video-card:hover .video-thumb-img { opacity: 0.85; }
-
-    /* Фоллбэк — красивый плейсхолдер с лого Rutube */
-    .video-thumb-placeholder {
-      position: absolute;
-      inset: 0;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #2D1B4E 0%, #4A1A6B 50%, #6B1A3A 100%);
-      gap: 8px;
+      transition: opacity 0.3s;
+      z-index: 1;
     }
 
-    .video-thumb-placeholder.show { display: flex; }
+    /* Если картинка не загрузилась — скрываем её, виден фон */
+    .video-thumb-img.hidden { opacity: 0; pointer-events: none; }
+    .video-card:hover .video-thumb-img:not(.hidden) { opacity: 0.85; }
 
-    .rutube-logo {
-      width: 56px;
-      height: 56px;
-      opacity: 0.85;
-    }
-
+    /* Кнопка play — поверх всего */
     .play-btn {
-      width: 64px;
-      height: 64px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--red), var(--violet));
       display: flex;
@@ -1032,31 +987,30 @@
       box-shadow: 0 4px 24px rgba(192,57,43,0.6);
       transition: transform 0.2s;
       position: relative;
-      z-index: 2;
+      z-index: 3;
       flex-shrink: 0;
     }
 
-    .play-btn:hover { transform: scale(1.12); }
+    .video-thumb:hover .play-btn { transform: scale(1.12); }
 
     .play-btn svg {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       fill: #fff;
       margin-left: 4px;
     }
 
     /* Подпись под видео */
     .video-label {
-      padding: 12px 16px;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.6);
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.65);
       font-style: italic;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
       border-top: 1px solid rgba(176,111,224,0.15);
     }
 
-    /* Video modal */
+    /* ===== VIDEO MODAL ===== */
     .video-modal-overlay {
       display: none;
       position: fixed;
@@ -1074,7 +1028,6 @@
       background: #1A0A2E;
       border: 1px solid rgba(176,111,224,0.3);
       border-radius: 16px;
-      padding: 0;
       max-width: 860px;
       width: 100%;
       position: relative;
@@ -1088,7 +1041,7 @@
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.18);
       border: none;
       cursor: pointer;
       color: #fff;
@@ -1099,7 +1052,7 @@
       z-index: 10;
       transition: background 0.2s;
     }
-    .video-modal-close:hover { background: rgba(255,255,255,0.25); }
+    .video-modal-close:hover { background: rgba(255,255,255,0.3); }
 
     .video-modal-iframe-wrap {
       position: relative;
@@ -1196,10 +1149,8 @@
     .presentation-card::before {
       content: '';
       position: absolute;
-      top: -100px;
-      right: -100px;
-      width: 400px;
-      height: 400px;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(176,111,224,0.1), transparent 70%);
     }
@@ -1291,8 +1242,7 @@
     }
 
     .contact-link-icon {
-      width: 44px;
-      height: 44px;
+      width: 44px; height: 44px;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -1394,6 +1344,13 @@
       padding: 40px 24px 28px;
     }
 
+    /* На мобильных — отступ снизу чтобы floating кнопки не перекрывали контент */
+    @media (max-width: 768px) {
+      footer {
+        padding-bottom: 140px;
+      }
+    }
+
     .footer-inner {
       max-width: 1200px;
       margin: 0 auto;
@@ -1425,16 +1382,13 @@
     }
 
     .footer-social a {
-      width: 48px;
-      height: 48px;
+      width: 48px; height: 48px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
       transition: all 0.25s;
-      position: relative;
-      z-index: 1;
     }
 
     .footer-social a:hover { transform: scale(1.12); opacity: 0.9; }
@@ -1490,9 +1444,16 @@
       align-items: flex-end;
     }
 
+    @media (max-width: 768px) {
+      .floating-cta {
+        bottom: 20px;
+        right: 16px;
+        gap: 10px;
+      }
+    }
+
     .float-btn {
-      width: 56px;
-      height: 56px;
+      width: 56px; height: 56px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1502,29 +1463,13 @@
       transition: all 0.3s;
     }
 
-    .float-btn:hover { transform: scale(1.12); box-shadow: 0 6px 28px rgba(0,0,0,0.45); }
+    @media (max-width: 768px) {
+      .float-btn { width: 50px; height: 50px; }
+    }
 
+    .float-btn:hover { transform: scale(1.12); box-shadow: 0 6px 28px rgba(0,0,0,0.45); }
     .float-wa { background: #25D366; }
     .float-tg { background: #2AABEE; }
-
-    /* На мобильных — кнопки меньше и отступ снизу, чтобы не перекрывать футер */
-    @media (max-width: 768px) {
-      .floating-cta {
-        bottom: 16px;
-        right: 16px;
-        gap: 8px;
-      }
-
-      .float-btn {
-        width: 48px;
-        height: 48px;
-      }
-
-      /* Футер получает отступ снизу равный высоте floating кнопок */
-      footer {
-        padding-bottom: 120px;
-      }
-    }
 
     /* ===== DIVIDER ===== */
     .gold-divider {
@@ -1592,10 +1537,8 @@
 
     .modal-close {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 32px;
-      height: 32px;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
       border-radius: 50%;
       background: rgba(255,255,255,0.1);
       border: none;
@@ -1611,7 +1554,7 @@
 
     .modal-box h3 { font-size: 1.8rem; color: #fff; margin-bottom: 8px; }
 
-    .modal-box p {
+    .modal-box > p {
       font-size: 0.88rem;
       color: rgba(255,255,255,0.55);
       margin-bottom: 24px;
@@ -1657,7 +1600,9 @@
   <div class="hero-particles"></div>
   <div class="hero-lines"></div>
   <div class="hero-content">
-    <!-- MOBILE: фото идёт первым через order CSS -->
+
+    <!-- На десктопе порядок: [hero-text | hero-photo].
+         На мобиле CSS order меняет: photo первым, text вторым -->
     <div class="hero-photo-wrap">
       <div class="hero-photo-frame">
         <div class="frame-deco"></div>
@@ -1706,6 +1651,7 @@
         <a href="#about" class="btn-outline">Узнать больше →</a>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -2068,7 +2014,7 @@
   </div>
 </section>
 
-<!-- ====================================================== ВИДЕООТЗЫВЫ (отдельный раздел) -->
+<!-- ====================================================== ВИДЕООТЗЫВЫ -->
 <section id="reviews" class="reviews-section">
   <div class="section-inner">
     <span class="section-tag" style="color:var(--yellow-light);">Живые истории</span>
@@ -2333,7 +2279,7 @@
   </a>
 </div>
 
-<!-- MODAL: Video -->
+<!-- MODAL: Video — НЕТ autoplay, НЕТ loop -->
 <div class="video-modal-overlay" id="videoModal">
   <div class="video-modal-box">
     <button class="video-modal-close" id="videoModalClose">✕</button>
@@ -2367,87 +2313,145 @@
 </div>
 
 <script>
-/* ==========================================================
-   ДАННЫЕ ВИДЕО — 9 ссылок Rutube
-   ========================================================== */
-const videos = [
-  { id: '06b123bf4904a67793a868fc77041cbc', p: 'ia5sSbZqqX1l0ArTpwKvQg', label: 'Отзыв 1' },
-  { id: '8d6302bd98a5a31c39abb9ba37a7ba64', p: 'sYWO2npKW-_ksG1saKD-zQ', label: 'Отзыв 2' },
-  { id: 'c22f96016ebffa8e1b330b54052b833e', p: 'jeeCamkjFVu6XmpxZZJxDw', label: 'Отзыв 3' },
-  { id: 'd097876ed75fddc7348543ccdbb7bfe9', p: 'h39u81Dqw4jYSutEdgsmGQ', label: 'Отзыв 4' },
-  { id: '5c8e402bb619b0af9f065dc1e796d538', p: '1LUg_XDvhcmJhuUZfra0TQ', label: 'Отзыв 5' },
-  { id: '424e2e2c66a20f9a98632124eca19f79', p: 'CGw--kEvtsLt204cwUhNxA', label: 'Отзыв 6' },
-  { id: '3d07212f9a8e9aa0353c53d0e8276f42', p: 'XZYFz_M-p1Lqql-PXpmRbQ', label: 'Отзыв 7' },
-  { id: 'b8fafe41a6af7421f929ff4f3edb33a0', p: 'iaxoALqteNa-Ja1WLblboA', label: 'Отзыв 8' },
-  { id: 'b2cad5db6d08f4b7476b28c740a0a0bf', p: 'dk-P7QoI-ExEvlw3GenAsQ', label: 'Отзыв 9' },
+/* ==============================================================
+   ДАННЫЕ ВИДЕО
+   ============================================================== */
+var videos = [
+  { id: '06b123bf4904a67793a868fc77041cbc', p: 'ia5sSbZqqX1l0ArTpwKvQg',  label: 'Отзыв 1' },
+  { id: '8d6302bd98a5a31c39abb9ba37a7ba64', p: 'sYWO2npKW-_ksG1saKD-zQ',  label: 'Отзыв 2' },
+  { id: 'c22f96016ebffa8e1b330b54052b833e', p: 'jeeCamkjFVu6XmpxZZJxDw',   label: 'Отзыв 3' },
+  { id: 'd097876ed75fddc7348543ccdbb7bfe9', p: 'h39u81Dqw4jYSutEdgsmGQ',   label: 'Отзыв 4' },
+  { id: '5c8e402bb619b0af9f065dc1e796d538', p: '1LUg_XDvhcmJhuUZfra0TQ',   label: 'Отзыв 5' },
+  { id: '424e2e2c66a20f9a98632124eca19f79', p: 'CGw--kEvtsLt204cwUhNxA',   label: 'Отзыв 6' },
+  { id: '3d07212f9a8e9aa0353c53d0e8276f42', p: 'XZYFz_M-p1Lqql-PXpmRbQ',  label: 'Отзыв 7' },
+  { id: 'b8fafe41a6af7421f929ff4f3edb33a0', p: 'iaxoALqteNa-Ja1WLblboA',  label: 'Отзыв 8' },
+  { id: 'b2cad5db6d08f4b7476b28c740a0a0bf', p: 'dk-P7QoI-ExEvlw3GenAsQ',  label: 'Отзыв 9' }
 ];
 
-/* ==========================================================
+/* ==============================================================
+   ГЕНЕРАЦИЯ ПРЕВЬЮ — рисуем canvas с лого Rutube
+   Это 100% работает на мобильных без сетевых запросов
+   ============================================================== */
+function makePreviewDataUrl(num) {
+  var c = document.createElement('canvas');
+  c.width = 400; c.height = 225;
+  var ctx = c.getContext('2d');
+
+  /* фон — градиент */
+  var g = ctx.createLinearGradient(0, 0, 400, 225);
+  g.addColorStop(0,   '#2D1B4E');
+  g.addColorStop(0.5, '#4A1A6B');
+  g.addColorStop(1,   '#6B1A3A');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 400, 225);
+
+  /* оранжевый квадрат с закруглением — логотип Rutube */
+  var rx = 160, ry = 45, rw = 80, rh = 80, radius = 14;
+  ctx.beginPath();
+  ctx.moveTo(rx + radius, ry);
+  ctx.lineTo(rx + rw - radius, ry);
+  ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + radius);
+  ctx.lineTo(rx + rw, ry + rh - radius);
+  ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - radius, ry + rh);
+  ctx.lineTo(rx + radius, ry + rh);
+  ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - radius);
+  ctx.lineTo(rx, ry + radius);
+  ctx.quadraticCurveTo(rx, ry, rx + radius, ry);
+  ctx.closePath();
+  ctx.fillStyle = '#FF4300';
+  ctx.fill();
+
+  /* буква R внутри квадрата */
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 42px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('R', rx + rw / 2, ry + rh / 2 + 2);
+
+  /* подпись "Видеоотзыв N" */
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.font = '16px Arial';
+  ctx.fillText('Видеоотзыв ' + num, 200, 158);
+
+  /* тонкие декоративные линии */
+  ctx.strokeStyle = 'rgba(176,111,224,0.25)';
+  ctx.lineWidth = 1;
+  for (var i = 0; i < 400; i += 40) {
+    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 225); ctx.stroke();
+  }
+  for (var j = 0; j < 225; j += 40) {
+    ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(400, j); ctx.stroke();
+  }
+
+  return c.toDataURL('image/png');
+}
+
+/* ==============================================================
    ГЕНЕРАЦИЯ КАРТОЧЕК ВИДЕО
-   ========================================================== */
-const grid = document.getElementById('videosGrid');
+   ============================================================== */
+var grid = document.getElementById('videosGrid');
 
 videos.forEach(function(v, i) {
   var delayClass = '';
   if (i % 3 === 1) delayClass = ' aos-delay-1';
   if (i % 3 === 2) delayClass = ' aos-delay-2';
 
-  // URL превью через API Rutube
-  var thumbUrl = 'https://rutube.ru/api/video/' + v.id + '/thumbnail/?redirect=1';
+  /* canvas-превью — всегда отображается */
+  var previewDataUrl = makePreviewDataUrl(i + 1);
+
+  /* Пробуем также загрузить реальный thumbnail с Rutube.
+     Если загрузится — заменим canvas-превью.
+     Если нет (приватные видео) — останется canvas. */
+  var thumbUrl = 'https://rutube.ru/api/video/' + v.id + '/thumbnail/?redirect=1&t=' + Date.now();
 
   var card = document.createElement('div');
   card.className = 'video-card aos' + delayClass;
-  card.setAttribute('data-idx', String(i));
 
   card.innerHTML =
     '<div class="video-thumb">' +
-      '<img' +
-        ' class="video-thumb-img"' +
-        ' src="' + thumbUrl + '"' +
-        ' alt="Видеоотзыв ' + (i + 1) + '"' +
-        ' loading="lazy"' +
-        ' decoding="async"' +
-      ' />' +
-      '<div class="video-thumb-placeholder">' +
-        '<svg class="rutube-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-          '<rect width="120" height="120" rx="20" fill="#FF4300"/>' +
-          '<path d="M34 32h28c10 0 17 7 17 16 0 7-4 13-10 15l12 25H66L55 65H50v23H34V32zm16 20h11c3 0 5-2 5-5s-2-5-5-5H50v10z" fill="white"/>' +
-        '</svg>' +
+      /* canvas-превью как базовый фон */
+      '<div class="video-thumb-bg">' +
+        '<img src="' + previewDataUrl + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" alt="" />' +
       '</div>' +
+      /* реальное превью поверх (если загрузится) */
+      '<img class="video-thumb-img" src="' + thumbUrl + '" alt="Видеоотзыв ' + (i+1) + '" loading="lazy" />' +
+      /* кнопка play поверх всего */
       '<div class="play-btn">' +
         '<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>' +
       '</div>' +
     '</div>' +
     '<div class="video-label">▶ ' + v.label + '</div>';
 
-  // Обработчик ошибки изображения — показываем плейсхолдер
-  var img = card.querySelector('.video-thumb-img');
-  var placeholder = card.querySelector('.video-thumb-placeholder');
-
-  img.addEventListener('error', function() {
-    img.style.display = 'none';
-    placeholder.classList.add('show');
+  /* Если реальный thumbnail не загрузился — скрываем его, виден canvas */
+  var realImg = card.querySelector('.video-thumb-img');
+  realImg.addEventListener('error', function() {
+    this.classList.add('hidden');
+  });
+  /* Если загрузился — показываем поверх canvas */
+  realImg.addEventListener('load', function() {
+    this.style.opacity = '1';
   });
 
-  card.addEventListener('click', function() {
-    openVideo(i);
-  });
-
+  card.addEventListener('click', function() { openVideo(i); });
   grid.appendChild(card);
 });
 
-/* ==========================================================
-   ВИДЕО МОДАЛЬНОЕ ОКНО
-   Главное: НЕТ autoplay, НЕТ loop — видео не перезапускается
-   ========================================================== */
-var videoModal    = document.getElementById('videoModal');
+/* ==============================================================
+   ВИДЕО МОДАЛКА
+   КЛЮЧЕВОЕ: autoplay=0, НЕТ loop, НЕТ postMessage-обработчика.
+   Rutube НЕ будет перезапускать видео сам — это поведение плеера
+   когда loop не задан. Мы также не слушаем никаких событий и
+   не вмешиваемся в работу плеера — видео просто останавливается
+   по окончании, как и должно.
+   ============================================================== */
+var videoModal     = document.getElementById('videoModal');
 var videoIframeWrap = document.getElementById('videoIframeWrap');
 var videoModalClose = document.getElementById('videoModalClose');
 
 function killIframe() {
   var old = videoIframeWrap.querySelector('iframe');
   if (old) {
-    // Полностью уничтожаем iframe чтобы остановить воспроизведение
+    /* src = about:blank — гарантированно останавливает воспроизведение */
     old.src = 'about:blank';
     old.remove();
   }
@@ -2459,21 +2463,23 @@ function openVideo(idx) {
   killIframe();
 
   /*
-   * КЛЮЧЕВЫЕ параметры:
-   * autoplay=0  — не запускать автоматически
-   * loop=0      — НЕ зацикливать (главное требование)
-   * Rutube не поддерживает loop через embed, поэтому
-   * мы НЕ передаём loop вообще — по умолчанию он выключен.
-   * Также НЕ слушаем postMessage и не перезапускаем iframe —
-   * это гарантирует что видео не начнётся снова после окончания.
+   * ПАРАМЕТРЫ RUTUBE EMBED:
+   * autoplay=0      — не запускать сразу при открытии
+   * loop=0          — НЕ зацикливать (это главное!)
+   * endscreen=0     — убрать экран с рекомендациями в конце
+   *                   (именно он часто провоцирует повтор)
    */
-  var embedUrl = 'https://rutube.ru/play/embed/' + v.id + '?p=' + v.p + '&autoplay=0';
+  var embedUrl = 'https://rutube.ru/play/embed/' + v.id +
+    '?p=' + v.p +
+    '&autoplay=0' +
+    '&loop=0' +
+    '&endscreen=0';
 
   var iframe = document.createElement('iframe');
+  iframe.src = embedUrl;
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allowfullscreen', '');
   iframe.setAttribute('allow', 'fullscreen; picture-in-picture; autoplay');
-  iframe.src = embedUrl;
   iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
 
   videoIframeWrap.appendChild(iframe);
@@ -2488,22 +2494,21 @@ function closeVideo() {
 }
 
 videoModalClose.addEventListener('click', closeVideo);
-
 videoModal.addEventListener('click', function(e) {
   if (e.target === videoModal) closeVideo();
 });
 
-/* ==========================================================
+/* ==============================================================
    NAVBAR SCROLL
-   ========================================================== */
+   ============================================================== */
 var navbar = document.getElementById('navbar');
 window.addEventListener('scroll', function() {
   navbar.classList.toggle('scrolled', window.scrollY > 30);
 });
 
-/* ==========================================================
+/* ==============================================================
    BURGER MENU
-   ========================================================== */
+   ============================================================== */
 var burgerBtn  = document.getElementById('burgerBtn');
 var mobileMenu = document.getElementById('mobileMenu');
 
@@ -2516,14 +2521,14 @@ function closeMobileMenu() {
 }
 
 document.addEventListener('click', function(e) {
-  if (!navbar.contains(e.target)) {
+  if (!navbar.contains(e.target) && !mobileMenu.contains(e.target)) {
     mobileMenu.classList.remove('open');
   }
 });
 
-/* ==========================================================
-   AOS — АНИМАЦИЯ ПРИ СКРОЛЛЕ
-   ========================================================== */
+/* ==============================================================
+   AOS — анимация при скролле
+   ============================================================== */
 var aosElements = document.querySelectorAll('.aos');
 var aosObserver = new IntersectionObserver(function(entries) {
   entries.forEach(function(entry) {
@@ -2532,9 +2537,9 @@ var aosObserver = new IntersectionObserver(function(entries) {
 }, { threshold: 0.08 });
 aosElements.forEach(function(el) { aosObserver.observe(el); });
 
-/* ==========================================================
+/* ==============================================================
    ВАЛИДАЦИЯ ПОЛЕЙ
-   ========================================================== */
+   ============================================================== */
 var inputName    = document.getElementById('inputName');
 var inputContact = document.getElementById('inputContact');
 
@@ -2552,7 +2557,6 @@ inputContact.addEventListener('keypress', function(e) {
   if (!/[0-9+@a-zA-Z_\-]/.test(e.key)) e.preventDefault();
 });
 
-/* Счётчик символов textarea */
 var inputMessage = document.getElementById('inputMessage');
 var charCounter  = document.getElementById('charCounter');
 inputMessage.addEventListener('input', function() {
@@ -2561,37 +2565,29 @@ inputMessage.addEventListener('input', function() {
   charCounter.style.color = len >= 2900 ? 'var(--red-light)' : 'rgba(255,255,255,0.35)';
 });
 
-/* ==========================================================
+/* ==============================================================
    ФОРМА КОНТАКТА
-   ========================================================== */
+   ============================================================== */
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
-
   var name     = inputName.value.trim();
   var contact  = inputContact.value.trim();
   var interest = document.getElementById('inputInterest').value;
   var message  = inputMessage.value.trim();
 
   if (!name || name.length < 2) {
-    inputName.style.borderColor = 'var(--red)';
-    inputName.focus();
-    return;
+    inputName.style.borderColor = 'var(--red)'; inputName.focus(); return;
   }
   if (!contact || contact.length < 5) {
-    inputContact.style.borderColor = 'var(--red)';
-    inputContact.focus();
-    return;
+    inputContact.style.borderColor = 'var(--red)'; inputContact.focus(); return;
   }
 
-  var labels = {
-    'health':  'Оздоровление и омоложение',
-    'business':'Бизнес и доход',
-    'both':    'И здоровье, и доход',
-    'product': 'Просто попробовать продукт',
-    '':        'Не указано'
-  };
+  var labels = { health:'Оздоровление и омоложение', business:'Бизнес и доход',
+                 both:'И здоровье, и доход', product:'Просто попробовать продукт', '':'Не указано' };
 
-  var body    = encodeURIComponent('Новая заявка с сайта!\n\nИмя: ' + name + '\nКонтакт: ' + contact + '\nИнтерес: ' + (labels[interest] || 'Не указано') + '\n\nВопрос/пожелание:\n' + (message || 'Не указано'));
+  var body    = encodeURIComponent('Новая заявка с сайта!\n\nИмя: ' + name +
+    '\nКонтакт: ' + contact + '\nИнтерес: ' + (labels[interest]||'Не указано') +
+    '\n\nВопрос/пожелание:\n' + (message||'Не указано'));
   var subject = encodeURIComponent('Заявка на созвон от ' + name);
   window.location.href = 'mailto:lena.zaripova.1972@mail.ru?subject=' + subject + '&body=' + body;
 
@@ -2601,9 +2597,9 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   }, 500);
 });
 
-/* ==========================================================
+/* ==============================================================
    МОДАЛКА ПРЕЗЕНТАЦИЯ
-   ========================================================== */
+   ============================================================== */
 var modalName    = document.getElementById('modalName');
 var modalContact = document.getElementById('modalContact');
 
@@ -2633,8 +2629,8 @@ document.getElementById('modalForm').addEventListener('submit', function(e) {
   if (!name || name.length < 2)    { modalName.style.borderColor    = 'var(--red)'; modalName.focus();    return; }
   if (!contact || contact.length < 5) { modalContact.style.borderColor = 'var(--red)'; modalContact.focus(); return; }
 
-  var body    = encodeURIComponent('Запрос книги-презентации WHIEDA!\n\nИмя: ' + name + '\nКонтакт: ' + contact);
-  var subject = encodeURIComponent('Запрос книги-презентации WHIEDA от ' + name);
+  var body    = encodeURIComponent('Запрос книги WHIEDA!\n\nИмя: ' + name + '\nКонтакт: ' + contact);
+  var subject = encodeURIComponent('Запрос книги WHIEDA от ' + name);
   window.location.href = 'mailto:lena.zaripova.1972@mail.ru?subject=' + subject + '&body=' + body;
 
   this.innerHTML =
@@ -2646,9 +2642,9 @@ document.getElementById('modalForm').addEventListener('submit', function(e) {
     '</div>';
 });
 
-/* ==========================================================
-   ESCAPE — закрыть любую модалку
-   ========================================================== */
+/* ==============================================================
+   ESC — закрыть любую модалку
+   ============================================================== */
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeVideo();
@@ -2656,9 +2652,9 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-/* ==========================================================
+/* ==============================================================
    АКТИВНАЯ ССЫЛКА В НАВБАРЕ
-   ========================================================== */
+   ============================================================== */
 var sections = document.querySelectorAll('section[id]');
 var navLinks = document.querySelectorAll('.nav-links a');
 
