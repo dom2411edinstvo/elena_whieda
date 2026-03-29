@@ -6,8 +6,13 @@
   <title>Елена Зарипова — Врач &amp; Партнёр WHIEDA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/></noscript>
+  <!-- Критический fallback шрифт — Inter/Garamond через system-ui до загрузки Google Fonts -->
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', Georgia, serif; }
+  </style>
   <style>
     :root {
       --violet: #7C3FA8;
@@ -667,14 +672,7 @@
     }
 
     /* ===== COMPANY ===== */
-    .company-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      margin-top: 48px;
-    }
-    @media (max-width: 768px) { .company-grid { grid-template-columns: 1fr; } }
+    /* .company-grid определён ниже в блоке «Видео в секции компании» */
 
     .company-info p {
       font-size: 0.95rem;
@@ -708,16 +706,42 @@
     }
     @media (max-width: 480px) { .company-features { grid-template-columns: 1fr; } }
 
-    /* Видео в секции компании */
+    /* ===== COMPANY GRID — новая структура ===== */
+    .company-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px 56px;
+      align-items: start;
+      margin-top: 40px;
+    }
+    /* Текст — левая колонка, 1-я строка */
+    .company-info { grid-column: 1; grid-row: 1; }
+    /* Видео — правая колонка, 1-я строка */
+    .company-video-wrap { grid-column: 2; grid-row: 1; }
+    /* Карточки-фичи — вся ширина, 2-я строка */
+    .company-features-row { grid-column: 1 / -1; grid-row: 2; }
+
+    @media (max-width: 768px) {
+      .company-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .company-info { grid-column: 1; grid-row: 1; }
+      .company-video-wrap { grid-column: 1; grid-row: 2; }
+      .company-features-row { grid-column: 1; grid-row: 3; }
+    }
+
+    /* Видео-карточка в секции компании */
     .company-video-wrap {
-      grid-column: 1 / -1; /* на всю ширину грида */
-      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
     .company-video-label {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -725,8 +749,7 @@
       margin-bottom: 14px;
     }
     .company-video-icon {
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--violet), var(--red));
       display: inline-flex;
@@ -741,16 +764,10 @@
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 4px 24px rgba(124,63,168,0.1);
-      max-width: 720px;
-      margin: 0 auto;
+      background: #fff;
     }
     .company-video-wrap .rt-preview {
       background: #1A0A2E;
-    }
-    @media (max-width: 768px) {
-      .company-video-wrap .video-card {
-        max-width: 100%;
-      }
     }
 
     .feature-card {
@@ -1005,7 +1022,8 @@
     .rt-preview {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 — надёжнее aspect-ratio на мобильных */
+      height: 0;                /* КРИТИЧНО: без этого absolute дети не видят высоту */
+      padding-bottom: 56.25%;  /* 16:9 */
       background: #1a0a2e;
       overflow: hidden;
       cursor: pointer;
@@ -1020,7 +1038,6 @@
       object-fit: cover;
       display: block;
       transition: transform 0.3s;
-      /* Без loading=lazy — картинка грузится сразу, видна на мобиле */
     }
 
     .rt-preview:hover img { transform: scale(1.04); }
@@ -1825,6 +1842,8 @@
     <div class="section-line"></div>
 
     <div class="company-grid">
+
+      <!-- ТЕКСТ — левая колонка -->
       <div class="company-info aos">
         <p>
           <strong>WHIEDA</strong> — Международная ассоциация «Здоровье и Процветание», официально
@@ -1841,7 +1860,6 @@
           современных технологий. Качество подтверждено международными сертификатами: Халяль, FDA
           и другими. На азиатском рынке компания работает уже более 15 лет.
         </p>
-
         <div class="company-badges">
           <span class="badge">🌏 Азиатский рынок 15+ лет</span>
           <span class="badge">✅ Халяль сертификат</span>
@@ -1852,11 +1870,11 @@
         </div>
       </div>
 
-      <!-- Видео о компании — на всю ширину между блоками -->
-      <div class="company-video-wrap aos">
+      <!-- ВИДЕО — правая колонка -->
+      <div class="company-video-wrap aos aos-delay-2">
         <div class="company-video-label">
           <span class="company-video-icon">▶</span>
-          Официальная презентация компании WHIEDA
+          Официальная презентация WHIEDA
         </div>
         <div class="video-card"
              data-video-id="ccdb10c5a7dfbe27654eb936cb00899e"
@@ -1864,14 +1882,15 @@
           <div class="rt-preview">
             <img src="https://rutube.ru/api/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbnail/?redirect=1&p=eaJ-tpIPjjXD5aOxXTeJtg"
                  alt="Презентация компании WHIEDA"
-                 loading="lazy"
+                 loading="lazy" decoding="async"
                  onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbs/m.jpg';">
             <div class="rt-play"><span></span></div>
           </div>
         </div>
       </div>
 
-      <div>
+      <!-- КАРТОЧКИ — вся ширина снизу -->
+      <div class="company-features-row">
         <div class="company-features">
           <div class="feature-card aos aos-delay-1">
             <div class="icon">🌿</div>
@@ -1905,6 +1924,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -2097,108 +2117,99 @@
     <div class="video-reviews-grid">
 
       <!-- Видео 1 -->
-      <div class="video-card"
-           data-video-id="06b123bf4904a67793a868fc77041cbc"
-           data-p="ia5sSbZqqX1l0ArTpwKvQg">
+      <div class="video-card" data-video-id="06b123bf4904a67793a868fc77041cbc" data-p="ia5sSbZqqX1l0ArTpwKvQg">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/06b123bf4904a67793a868fc77041cbc/thumbnail/?redirect=1"
-               alt="Отзыв 1">
+               alt="Отзыв 1" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/06b123bf4904a67793a868fc77041cbc/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 1</div>
       </div>
 
       <!-- Видео 2 -->
-      <div class="video-card"
-           data-video-id="8d6302bd98a5a31c39abb9ba37a7ba64"
-           data-p="sYWO2npKW-_ksG1saKD-zQ">
+      <div class="video-card" data-video-id="8d6302bd98a5a31c39abb9ba37a7ba64" data-p="sYWO2npKW-_ksG1saKD-zQ">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/8d6302bd98a5a31c39abb9ba37a7ba64/thumbnail/?redirect=1"
-               alt="Отзыв 2">
+               alt="Отзыв 2" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/8d6302bd98a5a31c39abb9ba37a7ba64/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 2</div>
       </div>
 
       <!-- Видео 3 -->
-      <div class="video-card"
-           data-video-id="c22f96016ebffa8e1b330b54052b833e"
-           data-p="jeeCamkjFVu6XmpxZZJxDw">
+      <div class="video-card" data-video-id="c22f96016ebffa8e1b330b54052b833e" data-p="jeeCamkjFVu6XmpxZZJxDw">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/c22f96016ebffa8e1b330b54052b833e/thumbnail/?redirect=1"
-               alt="Отзыв 3">
+               alt="Отзыв 3" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/c22f96016ebffa8e1b330b54052b833e/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 3</div>
       </div>
 
       <!-- Видео 4 -->
-      <div class="video-card"
-           data-video-id="d097876ed75fddc7348543ccdbb7bfe9"
-           data-p="h39u81Dqw4jYSutEdgsmGQ">
+      <div class="video-card" data-video-id="d097876ed75fddc7348543ccdbb7bfe9" data-p="h39u81Dqw4jYSutEdgsmGQ">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/d097876ed75fddc7348543ccdbb7bfe9/thumbnail/?redirect=1"
-               alt="Отзыв 4">
+               alt="Отзыв 4" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/d097876ed75fddc7348543ccdbb7bfe9/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 4</div>
       </div>
 
       <!-- Видео 5 -->
-      <div class="video-card"
-           data-video-id="5c8e402bb619b0af9f065dc1e796d538"
-           data-p="1LUg_XDvhcmJhuUZfra0TQ">
+      <div class="video-card" data-video-id="5c8e402bb619b0af9f065dc1e796d538" data-p="1LUg_XDvhcmJhuUZfra0TQ">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/5c8e402bb619b0af9f065dc1e796d538/thumbnail/?redirect=1"
-               alt="Отзыв 5">
+               alt="Отзыв 5" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/5c8e402bb619b0af9f065dc1e796d538/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 5</div>
       </div>
 
       <!-- Видео 6 -->
-      <div class="video-card"
-           data-video-id="424e2e2c66a20f9a98632124eca19f79"
-           data-p="CGw--kEvtsLt204cwUhNxA">
+      <div class="video-card" data-video-id="424e2e2c66a20f9a98632124eca19f79" data-p="CGw--kEvtsLt204cwUhNxA">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/424e2e2c66a20f9a98632124eca19f79/thumbnail/?redirect=1"
-               alt="Отзыв 6">
+               alt="Отзыв 6" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/424e2e2c66a20f9a98632124eca19f79/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 6</div>
       </div>
 
       <!-- Видео 7 -->
-      <div class="video-card"
-           data-video-id="3d07212f9a8e9aa0353c53d0e8276f42"
-           data-p="XZYFz_M-p1Lqql-PXpmRbQ">
+      <div class="video-card" data-video-id="3d07212f9a8e9aa0353c53d0e8276f42" data-p="XZYFz_M-p1Lqql-PXpmRbQ">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/3d07212f9a8e9aa0353c53d0e8276f42/thumbnail/?redirect=1"
-               alt="Отзыв 7">
+               alt="Отзыв 7" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/3d07212f9a8e9aa0353c53d0e8276f42/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 7</div>
       </div>
 
       <!-- Видео 8 -->
-      <div class="video-card"
-           data-video-id="b8fafe41a6af7421f929ff4f3edb33a0"
-           data-p="iaxoALqteNa-Ja1WLblboA">
+      <div class="video-card" data-video-id="b8fafe41a6af7421f929ff4f3edb33a0" data-p="iaxoALqteNa-Ja1WLblboA">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/b8fafe41a6af7421f929ff4f3edb33a0/thumbnail/?redirect=1"
-               alt="Отзыв 8">
+               alt="Отзыв 8" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/b8fafe41a6af7421f929ff4f3edb33a0/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 8</div>
       </div>
 
       <!-- Видео 9 -->
-      <div class="video-card"
-           data-video-id="b2cad5db6d08f4b7476b28c740a0a0bf"
-           data-p="dk-P7QoI-ExEvlw3GenAsQ">
+      <div class="video-card" data-video-id="b2cad5db6d08f4b7476b28c740a0a0bf" data-p="dk-P7QoI-ExEvlw3GenAsQ">
         <div class="rt-preview">
           <img src="https://rutube.ru/api/video/b2cad5db6d08f4b7476b28c740a0a0bf/thumbnail/?redirect=1"
-               alt="Отзыв 9">
+               alt="Отзыв 9" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/b2cad5db6d08f4b7476b28c740a0a0bf/thumbs/m.jpg';">
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 9</div>
