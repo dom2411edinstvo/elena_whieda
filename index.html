@@ -8,11 +8,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
 
-  <!-- RUTUBE KILLER: гасим автоматические iframe, но не трогаем те что созданы по клику -->
+  <!-- RUTUBE KILLER v3: превью + клик-плеер без autoplay, мобильный фикс -->
   <script>
   (() => {
-    const SKIP_ATTR = 'data-rutube-user-play';
+    const SKIP_ATTR = 'data-rutube-handled';
+    const PROCESSED = new WeakSet();
 
+    /* --- извлечь src из атрибутов iframe (включая lazy-варианты) --- */
+    function getIframeSrc(iframe) {
+      return (
+        iframe.getAttribute('src') ||
+        iframe.getAttribute('data-src') ||
+        iframe.getAttribute('data-lazy-src') ||
+        ''
+      );
+    }
+
+    /* --- извлечь videoId из URL --- */
     function extractId(src) {
       if (!src) return null;
       let m = src.match(/\/play\/embed\/([A-Za-z0-9_-]+)/i);
@@ -22,119 +34,198 @@
       return null;
     }
 
-    function createPreview(videoId, pParam) {
+    /* --- построить превью-обёртку --- */
+    function makePlaceholder(videoId, pParam) {
       const wrapper = document.createElement('div');
       wrapper.className = 'rutube-wrapper';
+      /* paddingBottom вместо aspect-ratio — работает на iOS/старых Android */
+      wrapper.style.cssText = [
+        'position:relative',
+        'width:100%',
+        'padding-bottom:56.25%',
+        'background:#0d0618',
+        'border-radius:12px',
+        'overflow:hidden',
+        'cursor:pointer'
+      ].join(';');
 
+      /* --- превью-картинка --- */
       const img = document.createElement('img');
       img.className = 'rutube-thumb';
       img.alt = 'Превью видео';
       img.loading = 'lazy';
       img.decoding = 'async';
-      img.src = 'https://rutube.ru/api/video/' + videoId + '/thumbnail/?redirect=1';
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;';
+
+      /* цепочка фолбэков */
+      let fallbackStep = 0;
+      const fallbacks = [
+        'https://rutube.ru/api/video/' + videoId + '/thumbnail/?redirect=1',
+        'https://pic.rutube.ru/video/' + videoId + '/thumbs/m.jpg',
+        ''
+      ];
+      img.src = fallbacks[0];
       img.onerror = function () {
-        img.onerror = function () {
+        fallbackStep++;
+        if (fallbacks[fallbackStep]) {
+          img.src = fallbacks[fallbackStep];
+        } else {
           img.style.display = 'none';
-          wrapper.style.background = '#1a1a1a';
-        };
-        img.src = 'https://pic.rutube.ru/video/' + videoId + '/thumbs/m.jpg';
+        }
       };
 
+      /* --- оверлей снизу --- */
       const overlay = document.createElement('div');
       overlay.className = 'rt-overlay';
+      overlay.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,rgba(0,0,0,.55),transparent);pointer-events:none;z-index:1;';
 
-      const btn = document.createElement('button');
-      btn.type = 'button';
+      /* --- кнопка play --- */
+      const btn = document.createElement('div');
       btn.className = 'rt-play-btn';
+      btn.setAttribute('role', 'button');
       btn.setAttribute('aria-label', 'Воспроизвести видео');
+      btn.style.cssText = [
+        'position:absolute',
+        'top:50%',
+        'left:50%',
+        'transform:translate(-50%,-50%)',
+        'width:68px',
+        'height:48px',
+        'border-radius:14px',
+        'background:rgba(0,0,0,.72)',
+        'display:flex',
+        'align-items:center',
+        'justify-content:center',
+        'pointer-events:none',
+        'z-index:2',
+        'transition:background .25s'
+      ].join(';');
+      btn.innerHTML = '<span style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid #fff;display:block;margin-left:4px;"></span>';
 
       wrapper.appendChild(img);
       wrapper.appendChild(overlay);
       wrapper.appendChild(btn);
 
-      wrapper.addEventListener('click', function () {
-        if (wrapper.classList.contains('loaded')) return;
-        wrapper.classList.add('loaded');
+      /* hover — красная кнопка */
+      wrapper.addEventListener('mouseenter', () => { btn.style.background = '#e53935'; });
+      wrapper.addEventListener('mouseleave', () => { btn.style.background = 'rgba(0,0,0,.72)'; });
+
+      /* --- клик — грузим iframe БЕЗ autoplay --- */
+      wrapper.addEventListener('click', function onClick() {
+        wrapper.removeEventListener('click', onClick);
+        wrapper.style.cursor = 'default';
 
         let embedSrc = 'https://rutube.ru/play/embed/' + videoId + '?autoplay=0';
         if (pParam) embedSrc += '&p=' + encodeURIComponent(pParam);
 
         const iframe = document.createElement('iframe');
-        iframe.src = embedSrc;
+        /* ВАЖНО: не даём allow="autoplay" */
+        iframe.setAttribute('allow', 'fullscreen');
         iframe.setAttribute('allowfullscreen', '');
-        iframe.setAttribute('allow', 'fullscreen'); /* НЕ allow="autoplay" */
         iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute(SKIP_ATTR, '1'); /* помечаем — не трогать! */
+        iframe.setAttribute(SKIP_ATTR, '1'); /* маркер — не трогать */
+        iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;z-index:5;';
+        iframe.src = embedSrc;
 
-        img.style.display     = 'none';
+        /* убираем превью */
+        img.style.display = 'none';
         overlay.style.display = 'none';
-        btn.style.display     = 'none';
+        btn.style.display = 'none';
         wrapper.appendChild(iframe);
-        wrapper.style.cursor = 'default';
       });
 
       return wrapper;
     }
 
-    function killIfAutomatic(iframe) {
-      try {
-        if (!iframe || iframe.tagName.toLowerCase() !== 'iframe') return;
-        /* Если это iframe созданный НАМИ по клику — не трогаем */
-        if (iframe.getAttribute(SKIP_ATTR) === '1') return;
-        const src = iframe.getAttribute('src') || '';
-        if (!src.includes('rutube.ru')) return;
-        const videoId = extractId(src);
-        if (!videoId) return;
-        /* Сразу глушим автозапуск */
-        try { iframe.setAttribute('src', 'about:blank'); } catch(e) {}
-        const wrapper = createPreview(videoId, '');
-        iframe.replaceWith(wrapper);
-      } catch(e) {}
+    /* --- заменить автоматический iframe Rutube на превью --- */
+    function replaceIfRutube(iframe) {
+      if (!iframe || iframe.tagName.toLowerCase() !== 'iframe') return;
+      if (PROCESSED.has(iframe)) return;
+      if (iframe.getAttribute(SKIP_ATTR) === '1') return; /* наш — не трогаем */
+
+      const src = getIframeSrc(iframe);
+      if (!src || !src.includes('rutube.ru')) return;
+
+      const videoId = extractId(src);
+      if (!videoId) return;
+
+      PROCESSED.add(iframe);
+      iframe.setAttribute(SKIP_ATTR, '1');
+
+      /* гасим немедленно */
+      try { iframe.setAttribute('src', 'about:blank'); } catch(e) {}
+
+      const placeholder = makePlaceholder(videoId, '');
+      iframe.replaceWith(placeholder);
     }
 
-    function initRutubeVideo(container) {
-      if (container._rutubeInit) return;
-      container._rutubeInit = true;
+    /* --- инициализировать .rutube-video контейнер --- */
+    function initContainer(container) {
+      if (PROCESSED.has(container)) return;
+      PROCESSED.add(container);
       const videoId = container.dataset.rutubeId;
       const pParam  = container.dataset.rutubeP || '';
       if (!videoId) return;
-      const wrapper = createPreview(videoId, pParam);
-      container.appendChild(wrapper);
+      const placeholder = makePlaceholder(videoId, pParam);
+      container.appendChild(placeholder);
     }
 
-    function run() {
-      document.querySelectorAll('iframe[src*="rutube.ru"]').forEach(killIfAutomatic);
-      document.querySelectorAll('.rutube-video').forEach(initRutubeVideo);
+    /* --- общий скан страницы --- */
+    function scanAll() {
+      document.querySelectorAll('iframe').forEach(replaceIfRutube);
+      document.querySelectorAll('.rutube-video').forEach(initContainer);
     }
 
-    /* MutationObserver — гасим только "автоматические" iframe */
-    const mo = new MutationObserver((mutations) => {
-      for (const mut of mutations) {
-        for (const node of mut.addedNodes) {
-          if (!(node instanceof HTMLElement)) continue;
-          if (node.tagName && node.tagName.toLowerCase() === 'iframe') {
-            killIfAutomatic(node);
-          } else {
-            if (node.querySelectorAll) {
-              node.querySelectorAll('iframe[src*="rutube.ru"]').forEach(killIfAutomatic);
+    /* --- запуск --- */
+    function start() {
+      scanAll();
+
+      /* Повторный скан каждые 500 мс первые 8 сек — для мобилок,
+         где src может появиться с задержкой (lazy/JS-вставки) */
+      let ticks = 0;
+      const timer = setInterval(() => {
+        scanAll();
+        if (++ticks >= 16) clearInterval(timer);
+      }, 500);
+
+      /* MutationObserver — ловим новые узлы */
+      const mo = new MutationObserver((mutations) => {
+        let found = false;
+        for (const mut of mutations) {
+          for (const node of mut.addedNodes) {
+            if (!(node instanceof HTMLElement)) continue;
+            const tag = node.tagName ? node.tagName.toLowerCase() : '';
+            if (tag === 'iframe') {
+              replaceIfRutube(node);
+            } else if (node.querySelectorAll) {
+              node.querySelectorAll('iframe').forEach(replaceIfRutube);
+              node.querySelectorAll('.rutube-video').forEach(initContainer);
             }
-          }
-          if (node.classList && node.classList.contains('rutube-video')) {
-            initRutubeVideo(node);
-          } else {
-            if (node.querySelectorAll) {
-              node.querySelectorAll('.rutube-video').forEach(initRutubeVideo);
+            if (node.classList && node.classList.contains('rutube-video')) {
+              initContainer(node);
             }
           }
         }
-      }
-    });
-    mo.observe(document.documentElement, { childList: true, subtree: true });
+      });
+      mo.observe(document.documentElement, { childList: true, subtree: true });
+
+      /* Также следим за изменением атрибута src у существующих iframe */
+      const moAttr = new MutationObserver((mutations) => {
+        for (const mut of mutations) {
+          if (mut.type === 'attributes' && mut.attributeName === 'src') {
+            replaceIfRutube(mut.target);
+          }
+        }
+      });
+      document.querySelectorAll('iframe').forEach(iframe => {
+        moAttr.observe(iframe, { attributes: true, attributeFilter: ['src'] });
+      });
+    }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', run);
+      document.addEventListener('DOMContentLoaded', start);
     } else {
-      run();
+      start();
     }
   })();
   </script>
@@ -1088,16 +1179,21 @@
     .video-card:hover { border-color: rgba(245,197,24,0.5); transform: translateY(-3px); }
 
     /* Обёртка превью — соотношение 16:9 */
+    /* ===== RUTUBE ПРЕВЬЮ (paddingBottom-метод — работает везде включая iOS) ===== */
     .rutube-wrapper {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 9;
-      cursor: pointer;
-      overflow: hidden;
+      padding-bottom: 56.25%; /* 16:9 */
       background: #0d0618;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      /* НЕ используем aspect-ratio — ненадёжно на старых мобильниках */
     }
 
     .rutube-wrapper img.rutube-thumb {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -1119,30 +1215,17 @@
       height: 48px;
       background: rgba(0, 0, 0, 0.72);
       border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.25s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       pointer-events: none;
       z-index: 2;
+      transition: background 0.25s, transform 0.2s;
     }
 
     .rutube-wrapper:hover .rt-play-btn {
       background: #e53935;
       transform: translate(-50%, -50%) scale(1.08);
-    }
-
-    .rt-play-btn::after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-38%, -50%);
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 10px 0 10px 18px;
-      border-color: transparent transparent transparent #fff;
     }
 
     /* Оверлей тёмного градиента снизу */
@@ -1155,14 +1238,10 @@
       z-index: 1;
     }
 
-    /* Когда iframe загружен — убираем курсор */
-    .rutube-wrapper.loaded {
-      cursor: default;
-    }
-
+    /* iframe вставляется по клику */
     .rutube-wrapper iframe {
       position: absolute;
-      top: 0; left: 0;
+      inset: 0;
       width: 100%;
       height: 100%;
       border: none;
