@@ -945,57 +945,42 @@
       .video-reviews-grid { grid-template-columns: 1fr; gap: 16px; }
     }
 
-    /* ===== VIDEO CARD ===== */
+    /* ===== RUTUBE ПРЕВЬЮ ===== */
     .video-card {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(176,111,224,0.25);
       border-radius: 16px;
       overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .video-card:hover {
-      border-color: rgba(245,197,24,0.5);
-      transform: translateY(-3px);
+      transition: all 0.3s;
     }
 
-    /* ===== ПРЕВЬЮ-ОБЁРТКА (работает на iOS/Android) ===== */
-    /* padding-bottom = 56.25% создаёт 16:9 без aspect-ratio */
+    .video-card:hover { border-color: rgba(245,197,24,0.5); transform: translateY(-3px); }
+
+    /* Превью-обёртка: padding-bottom = 16:9, работает везде включая iOS/Android */
     .rt-preview {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%;
-      background: #0d0618;
+      padding-bottom: 56.25%; /* 16:9 — надёжнее aspect-ratio на мобильных */
+      background: #1a0a2e;
       overflow: hidden;
       cursor: pointer;
       display: block;
-      /* НЕ используем height:0 — это ломает картинку на iOS */
     }
 
-    /* Картинка-превью: абсолютно, полностью заполняет контейнер */
-    .rt-thumb {
+    .rt-preview img {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
       transition: transform 0.3s;
-      /* Без lazy — грузится сразу, видна на мобиле */
-    }
-    .rt-preview:hover .rt-thumb { transform: scale(1.04); }
-
-    /* Тёмный градиент снизу */
-    .rt-gradient {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 60px;
-      background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
-      pointer-events: none;
-      z-index: 1;
+      /* Без loading=lazy — картинка грузится сразу, видна на мобиле */
     }
 
-    /* Кнопка Play */
+    .rt-preview:hover img { transform: scale(1.04); }
+
+    /* Кнопка Play — красная как у Rutube */
     .rt-play {
       position: absolute;
       top: 50%;
@@ -1012,11 +997,13 @@
       z-index: 2;
       transition: background 0.25s, transform 0.2s;
     }
+
     .rt-preview:hover .rt-play {
-      background: #e53935;
+      background: #e53935; /* красный Rutube */
       transform: translate(-50%, -50%) scale(1.08);
     }
-    /* Треугольник play */
+
+    /* треугольник play */
     .rt-play span {
       display: block;
       width: 0; height: 0;
@@ -1026,17 +1013,15 @@
       margin-left: 4px;
     }
 
-    /* iframe после клика — перекрывает всё превью */
-    .rt-iframe {
+    /* iframe после клика */
+    .rt-preview iframe {
       position: absolute;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
       border: none;
       z-index: 10;
-      display: none; /* скрыт пока не кликнули */
     }
-    .rt-iframe.active { display: block; }
 
     /* Подпись под видео */
     .video-label {
@@ -1046,6 +1031,63 @@
       font-style: italic;
       font-family: 'Cormorant Garamond', serif;
       border-top: 1px solid rgba(176,111,224,0.15);
+    }
+
+    /* ===== VIDEO MODAL (полноэкранный плеер по клику) ===== */
+    .video-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(12px);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .video-modal-overlay.open { display: flex; }
+
+    .video-modal-box {
+      background: #1A0A2E;
+      border: 1px solid rgba(176,111,224,0.3);
+      border-radius: 16px;
+      max-width: 860px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .video-modal-close:hover { background: rgba(255,255,255,0.3); }
+
+    .video-modal-iframe-wrap {
+      position: relative;
+      padding-top: 56.25%;
+      background: #000;
+    }
+    .video-modal-iframe-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     /* ===== INCOME ===== */
@@ -1991,100 +2033,109 @@
     <div class="video-reviews-grid">
 
       <!-- Видео 1 -->
-      <div class="video-card" data-video-id="06b123bf4904a67793a868fc77041cbc" data-p="ia5sSbZqqX1l0ArTpwKvQg">
+      <div class="video-card"
+           data-video-id="06b123bf4904a67793a868fc77041cbc"
+           data-p="ia5sSbZqqX1l0ArTpwKvQg">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 1">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/06b123bf4904a67793a868fc77041cbc/thumbnail/?redirect=1"
+               alt="Отзыв 1">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 1</div>
       </div>
 
       <!-- Видео 2 -->
-      <div class="video-card" data-video-id="8d6302bd98a5a31c39abb9ba37a7ba64" data-p="sYWO2npKW-_ksG1saKD-zQ">
+      <div class="video-card"
+           data-video-id="8d6302bd98a5a31c39abb9ba37a7ba64"
+           data-p="sYWO2npKW-_ksG1saKD-zQ">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 2">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/8d6302bd98a5a31c39abb9ba37a7ba64/thumbnail/?redirect=1"
+               alt="Отзыв 2">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 2</div>
       </div>
 
       <!-- Видео 3 -->
-      <div class="video-card" data-video-id="c22f96016ebffa8e1b330b54052b833e" data-p="jeeCamkjFVu6XmpxZZJxDw">
+      <div class="video-card"
+           data-video-id="c22f96016ebffa8e1b330b54052b833e"
+           data-p="jeeCamkjFVu6XmpxZZJxDw">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 3">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/c22f96016ebffa8e1b330b54052b833e/thumbnail/?redirect=1"
+               alt="Отзыв 3">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 3</div>
       </div>
 
       <!-- Видео 4 -->
-      <div class="video-card" data-video-id="d097876ed75fddc7348543ccdbb7bfe9" data-p="h39u81Dqw4jYSutEdgsmGQ">
+      <div class="video-card"
+           data-video-id="d097876ed75fddc7348543ccdbb7bfe9"
+           data-p="h39u81Dqw4jYSutEdgsmGQ">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 4">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/d097876ed75fddc7348543ccdbb7bfe9/thumbnail/?redirect=1"
+               alt="Отзыв 4">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 4</div>
       </div>
 
       <!-- Видео 5 -->
-      <div class="video-card" data-video-id="5c8e402bb619b0af9f065dc1e796d538" data-p="1LUg_XDvhcmJhuUZfra0TQ">
+      <div class="video-card"
+           data-video-id="5c8e402bb619b0af9f065dc1e796d538"
+           data-p="1LUg_XDvhcmJhuUZfra0TQ">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 5">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/5c8e402bb619b0af9f065dc1e796d538/thumbnail/?redirect=1"
+               alt="Отзыв 5">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 5</div>
       </div>
 
       <!-- Видео 6 -->
-      <div class="video-card" data-video-id="424e2e2c66a20f9a98632124eca19f79" data-p="CGw--kEvtsLt204cwUhNxA">
+      <div class="video-card"
+           data-video-id="424e2e2c66a20f9a98632124eca19f79"
+           data-p="CGw--kEvtsLt204cwUhNxA">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 6">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/424e2e2c66a20f9a98632124eca19f79/thumbnail/?redirect=1"
+               alt="Отзыв 6">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 6</div>
       </div>
 
       <!-- Видео 7 -->
-      <div class="video-card" data-video-id="3d07212f9a8e9aa0353c53d0e8276f42" data-p="XZYFz_M-p1Lqql-PXpmRbQ">
+      <div class="video-card"
+           data-video-id="3d07212f9a8e9aa0353c53d0e8276f42"
+           data-p="XZYFz_M-p1Lqql-PXpmRbQ">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 7">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/3d07212f9a8e9aa0353c53d0e8276f42/thumbnail/?redirect=1"
+               alt="Отзыв 7">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 7</div>
       </div>
 
       <!-- Видео 8 -->
-      <div class="video-card" data-video-id="b8fafe41a6af7421f929ff4f3edb33a0" data-p="iaxoALqteNa-Ja1WLblboA">
+      <div class="video-card"
+           data-video-id="b8fafe41a6af7421f929ff4f3edb33a0"
+           data-p="iaxoALqteNa-Ja1WLblboA">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 8">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/b8fafe41a6af7421f929ff4f3edb33a0/thumbnail/?redirect=1"
+               alt="Отзыв 8">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 8</div>
       </div>
 
       <!-- Видео 9 -->
-      <div class="video-card" data-video-id="b2cad5db6d08f4b7476b28c740a0a0bf" data-p="dk-P7QoI-ExEvlw3GenAsQ">
+      <div class="video-card"
+           data-video-id="b2cad5db6d08f4b7476b28c740a0a0bf"
+           data-p="dk-P7QoI-ExEvlw3GenAsQ">
         <div class="rt-preview">
-          <img class="rt-thumb" src="" alt="Отзыв 9">
-          <div class="rt-gradient"></div>
+          <img src="https://rutube.ru/api/video/b2cad5db6d08f4b7476b28c740a0a0bf/thumbnail/?redirect=1"
+               alt="Отзыв 9">
           <div class="rt-play"><span></span></div>
-          <iframe class="rt-iframe" src="" allow="fullscreen" allowfullscreen frameborder="0"></iframe>
         </div>
         <div class="video-label">▶ Отзыв 9</div>
       </div>
@@ -2373,7 +2424,7 @@
 <script>
 /* ================================================================
    NAVBAR SCROLL
-================================================================ */
+   ================================================================ */
 var navbar = document.getElementById('navbar');
 window.addEventListener('scroll', function () {
   navbar.classList.toggle('scrolled', window.scrollY > 30);
@@ -2381,7 +2432,7 @@ window.addEventListener('scroll', function () {
 
 /* ================================================================
    BURGER MENU
-================================================================ */
+   ================================================================ */
 var burgerBtn  = document.getElementById('burgerBtn');
 var mobileMenu = document.getElementById('mobileMenu');
 
@@ -2401,7 +2452,7 @@ document.addEventListener('click', function (e) {
 
 /* ================================================================
    AOS — анимация при скролле
-================================================================ */
+   ================================================================ */
 var aosObserver = new IntersectionObserver(function (entries) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -2413,71 +2464,8 @@ document.querySelectorAll('.aos').forEach(function (el) {
 });
 
 /* ================================================================
-   RUTUBE ПРЕВЬЮ — надёжная версия для iOS/Android
-   Логика:
-   1. iframe заранее в DOM, но src="" и display:none
-   2. Картинка грузится через JS с фолбэками
-   3. По клику: прячем превью-элементы, прописываем src iframe и показываем его
-   4. autoplay=0 — никакого автовоспроизведения
-================================================================ */
-document.querySelectorAll('.video-card[data-video-id]').forEach(function(card) {
-  var id      = card.getAttribute('data-video-id');
-  var p       = card.getAttribute('data-p') || '';
-  var preview = card.querySelector('.rt-preview');
-  var thumb   = card.querySelector('.rt-thumb');
-  var playBtn = card.querySelector('.rt-play');
-  var iframe  = card.querySelector('.rt-iframe');
-
-  if (!id || !preview || !thumb || !iframe) return;
-
-  /* --- Загружаем превью с цепочкой фолбэков --- */
-  var thumbUrls = [
-    'https://rutube.ru/api/video/' + id + '/thumbnail/?redirect=1',
-    'https://pic.rutube.ru/video/' + id + '/thumbs/m.jpg'
-  ];
-  var thumbStep = 0;
-
-  function loadThumb() {
-    thumb.src = thumbUrls[thumbStep];
-  }
-
-  thumb.addEventListener('error', function() {
-    thumbStep++;
-    if (thumbStep < thumbUrls.length) {
-      loadThumb();
-    } else {
-      /* Все фолбэки провалились — скрываем img, показываем заглушку */
-      thumb.style.display = 'none';
-    }
-  });
-
-  /* Стартуем загрузку превью */
-  loadThumb();
-
-  /* --- Клик по превью — показываем iframe --- */
-  preview.addEventListener('click', function() {
-    /* Строим URL без autoplay */
-    var src = 'https://rutube.ru/play/embed/' + id + '/?autoplay=0&loop=0';
-    if (p) src += '&p=' + encodeURIComponent(p);
-
-    /* Прячем всё превью */
-    thumb.style.display   = 'none';
-    playBtn.style.display = 'none';
-    var gradient = preview.querySelector('.rt-gradient');
-    if (gradient) gradient.style.display = 'none';
-
-    /* Показываем iframe */
-    iframe.src = src;
-    iframe.classList.add('active');
-
-    /* Убираем курсор-pointer с превью */
-    preview.style.cursor = 'default';
-  });
-});
-
-/* ================================================================
    ВАЛИДАЦИЯ ПОЛЕЙ
-================================================================ */
+   ================================================================ */
 var inputName    = document.getElementById('inputName');
 var inputContact = document.getElementById('inputContact');
 
@@ -2505,7 +2493,7 @@ inputMessage.addEventListener('input', function () {
 
 /* ================================================================
    ФОРМА КОНТАКТА
-================================================================ */
+   ================================================================ */
 document.getElementById('contactForm').addEventListener('submit', function (e) {
   e.preventDefault();
   var name     = inputName.value.trim();
@@ -2539,7 +2527,7 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
 
 /* ================================================================
    МОДАЛКА ПРЕЗЕНТАЦИЯ
-================================================================ */
+   ================================================================ */
 var modalName    = document.getElementById('modalName');
 var modalContact = document.getElementById('modalContact');
 
@@ -2584,14 +2572,14 @@ document.getElementById('modalForm').addEventListener('submit', function (e) {
 
 /* ================================================================
    ESC — закрыть модалку
-================================================================ */
+   ================================================================ */
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closePresentationModal();
 });
 
 /* ================================================================
    FLOATING КНОПКИ — скрываем когда виден футер
-================================================================ */
+   ================================================================ */
 var floatingCta = document.getElementById('floatingCta');
 var footerEl    = document.querySelector('footer');
 
@@ -2599,10 +2587,10 @@ function checkFloatingVisibility() {
   if (!footerEl || !floatingCta) return;
   var footerRect = footerEl.getBoundingClientRect();
   if (footerRect.top < window.innerHeight) {
-    floatingCta.style.opacity       = '0';
+    floatingCta.style.opacity      = '0';
     floatingCta.style.pointerEvents = 'none';
   } else {
-    floatingCta.style.opacity       = '1';
+    floatingCta.style.opacity      = '1';
     floatingCta.style.pointerEvents = 'auto';
   }
 }
@@ -2611,7 +2599,7 @@ checkFloatingVisibility();
 
 /* ================================================================
    АКТИВНАЯ ССЫЛКА В НАВБАРЕ
-================================================================ */
+   ================================================================ */
 var sections = document.querySelectorAll('section[id]');
 var navLinks = document.querySelectorAll('.nav-links a');
 
@@ -2629,6 +2617,49 @@ window.addEventListener('scroll', function () {
     }
   });
 }, { passive: true });
+
+/* ================================================================
+   RUTUBE — точно как на рабочем сайте:
+   data-video-id на .video-card, клик → iframe без autoplay
+   Никаких MutationObserver, никаких сложностей.
+   ================================================================ */
+document.querySelectorAll('.video-card[data-video-id]').forEach(function(card) {
+  var preview = card.querySelector('.rt-preview');
+  if (!preview) return;
+
+  preview.style.cursor = 'pointer';
+
+  preview.addEventListener('click', function() {
+    var id = card.getAttribute('data-video-id');
+    var p  = card.getAttribute('data-p') || '';
+    if (!id) return;
+
+    /* Строим URL БЕЗ autoplay — именно так на рабочем сайте */
+    var src = 'https://rutube.ru/play/embed/' + id + '/?autoplay=0&loop=0';
+    if (p) src += '&p=' + encodeURIComponent(p);
+
+    var iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'fullscreen'); /* НЕТ allow="autoplay" — принципиально */
+    iframe.setAttribute('frameborder', '0');
+    iframe.style.position = 'absolute';
+    iframe.style.top = '0';
+    iframe.style.left = '0';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    iframe.style.zIndex = '10';
+
+    /* Убираем превью целиком, вставляем iframe */
+    var img = preview.querySelector('img');
+    var btn = preview.querySelector('.rt-play');
+    if (img) img.style.display = 'none';
+    if (btn) btn.style.display = 'none';
+    preview.style.cursor = 'default';
+    preview.appendChild(iframe);
+  });
+});
 </script>
 
 </body>
