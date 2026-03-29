@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
 
-  <!-- RUTUBE KILLER v3: превью + клик-плеер без autoplay, мобильный фикс -->
+  <!-- RUTUBE: превью в HTML, iframe только по клику -->
   <script>
-  (() => {
-    const SKIP_ATTR = 'data-rutube-handled';
-    const PROCESSED = new WeakSet();
+  /* заглушка — вся логика внизу страницы */
+  void 0;
+  /*
 
     /* --- извлечь src из атрибутов iframe (включая lazy-варианты) --- */
     function getIframeSrc(iframe) {
@@ -227,7 +227,7 @@
     } else {
       start();
     }
-  })();
+  */
   </script>
   <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/></noscript>
   <style>
@@ -1178,22 +1178,19 @@
 
     .video-card:hover { border-color: rgba(245,197,24,0.5); transform: translateY(-3px); }
 
-    /* Обёртка превью — соотношение 16:9 */
-    /* ===== RUTUBE ПРЕВЬЮ (paddingBottom-метод — работает везде включая iOS) ===== */
-    .rutube-wrapper {
+    /* Превью-обёртка: padding-bottom = 16:9, работает везде включая iOS */
+    .rt-preview {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
-      background: #0d0618;
-      border-radius: 12px;
+      padding-bottom: 56.25%;
+      background: #1a0a2e;
       overflow: hidden;
       cursor: pointer;
-      /* НЕ используем aspect-ratio — ненадёжно на старых мобильниках */
     }
 
-    .rutube-wrapper img.rutube-thumb {
+    .rt-preview img {
       position: absolute;
-      inset: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -1201,19 +1198,17 @@
       transition: transform 0.3s;
     }
 
-    .rutube-wrapper:hover img.rutube-thumb {
-      transform: scale(1.04);
-    }
+    .rt-preview:hover img { transform: scale(1.04); }
 
-    /* Кнопка Play — стиль Rutube */
-    .rutube-wrapper .rt-play-btn {
+    /* Кнопка Play */
+    .rt-play {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 68px;
       height: 48px;
-      background: rgba(0, 0, 0, 0.72);
+      background: rgba(0,0,0,0.72);
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -1223,25 +1218,25 @@
       transition: background 0.25s, transform 0.2s;
     }
 
-    .rutube-wrapper:hover .rt-play-btn {
+    .rt-preview:hover .rt-play {
       background: #e53935;
       transform: translate(-50%, -50%) scale(1.08);
     }
 
-    /* Оверлей тёмного градиента снизу */
-    .rutube-wrapper .rt-overlay {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 60px;
-      background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
-      pointer-events: none;
-      z-index: 1;
+    /* треугольник внутри кнопки */
+    .rt-play span {
+      display: block;
+      width: 0; height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 18px solid #fff;
+      margin-left: 4px;
     }
 
-    /* iframe вставляется по клику */
-    .rutube-wrapper iframe {
+    /* iframe появляется после клика — растягивается на весь rt-preview */
+    .rt-preview iframe {
       position: absolute;
-      inset: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       border: none;
@@ -2259,55 +2254,82 @@
 
       <!-- Видео 1 -->
       <div class="video-card aos">
-        <div class="rutube-video" data-rutube-id="06b123bf4904a67793a868fc77041cbc" data-rutube-p="ia5sSbZqqX1l0ArTpwKvQg"></div>
+        <div class="rt-preview" data-id="06b123bf4904a67793a868fc77041cbc" data-p="ia5sSbZqqX1l0ArTpwKvQg">
+          <img src="https://rutube.ru/api/video/06b123bf4904a67793a868fc77041cbc/thumbnail/?redirect=1" alt="Отзыв 1" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 1</div>
       </div>
 
       <!-- Видео 2 -->
       <div class="video-card aos aos-delay-1">
-        <div class="rutube-video" data-rutube-id="8d6302bd98a5a31c39abb9ba37a7ba64" data-rutube-p="sYWO2npKW-_ksG1saKD-zQ"></div>
+        <div class="rt-preview" data-id="8d6302bd98a5a31c39abb9ba37a7ba64" data-p="sYWO2npKW-_ksG1saKD-zQ">
+          <img src="https://rutube.ru/api/video/8d6302bd98a5a31c39abb9ba37a7ba64/thumbnail/?redirect=1" alt="Отзыв 2" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 2</div>
       </div>
 
       <!-- Видео 3 -->
       <div class="video-card aos aos-delay-2">
-        <div class="rutube-video" data-rutube-id="c22f96016ebffa8e1b330b54052b833e" data-rutube-p="jeeCamkjFVu6XmpxZZJxDw"></div>
+        <div class="rt-preview" data-id="c22f96016ebffa8e1b330b54052b833e" data-p="jeeCamkjFVu6XmpxZZJxDw">
+          <img src="https://rutube.ru/api/video/c22f96016ebffa8e1b330b54052b833e/thumbnail/?redirect=1" alt="Отзыв 3" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 3</div>
       </div>
 
       <!-- Видео 4 -->
       <div class="video-card aos">
-        <div class="rutube-video" data-rutube-id="d097876ed75fddc7348543ccdbb7bfe9" data-rutube-p="h39u81Dqw4jYSutEdgsmGQ"></div>
+        <div class="rt-preview" data-id="d097876ed75fddc7348543ccdbb7bfe9" data-p="h39u81Dqw4jYSutEdgsmGQ">
+          <img src="https://rutube.ru/api/video/d097876ed75fddc7348543ccdbb7bfe9/thumbnail/?redirect=1" alt="Отзыв 4" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 4</div>
       </div>
 
       <!-- Видео 5 -->
       <div class="video-card aos aos-delay-1">
-        <div class="rutube-video" data-rutube-id="5c8e402bb619b0af9f065dc1e796d538" data-rutube-p="1LUg_XDvhcmJhuUZfra0TQ"></div>
+        <div class="rt-preview" data-id="5c8e402bb619b0af9f065dc1e796d538" data-p="1LUg_XDvhcmJhuUZfra0TQ">
+          <img src="https://rutube.ru/api/video/5c8e402bb619b0af9f065dc1e796d538/thumbnail/?redirect=1" alt="Отзыв 5" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 5</div>
       </div>
 
       <!-- Видео 6 -->
       <div class="video-card aos aos-delay-2">
-        <div class="rutube-video" data-rutube-id="424e2e2c66a20f9a98632124eca19f79" data-rutube-p="CGw--kEvtsLt204cwUhNxA"></div>
+        <div class="rt-preview" data-id="424e2e2c66a20f9a98632124eca19f79" data-p="CGw--kEvtsLt204cwUhNxA">
+          <img src="https://rutube.ru/api/video/424e2e2c66a20f9a98632124eca19f79/thumbnail/?redirect=1" alt="Отзыв 6" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 6</div>
       </div>
 
       <!-- Видео 7 -->
       <div class="video-card aos">
-        <div class="rutube-video" data-rutube-id="3d07212f9a8e9aa0353c53d0e8276f42" data-rutube-p="XZYFz_M-p1Lqql-PXpmRbQ"></div>
+        <div class="rt-preview" data-id="3d07212f9a8e9aa0353c53d0e8276f42" data-p="XZYFz_M-p1Lqql-PXpmRbQ">
+          <img src="https://rutube.ru/api/video/3d07212f9a8e9aa0353c53d0e8276f42/thumbnail/?redirect=1" alt="Отзыв 7" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 7</div>
       </div>
 
       <!-- Видео 8 -->
       <div class="video-card aos aos-delay-1">
-        <div class="rutube-video" data-rutube-id="b8fafe41a6af7421f929ff4f3edb33a0" data-rutube-p="iaxoALqteNa-Ja1WLblboA"></div>
+        <div class="rt-preview" data-id="b8fafe41a6af7421f929ff4f3edb33a0" data-p="iaxoALqteNa-Ja1WLblboA">
+          <img src="https://rutube.ru/api/video/b8fafe41a6af7421f929ff4f3edb33a0/thumbnail/?redirect=1" alt="Отзыв 8" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 8</div>
       </div>
 
       <!-- Видео 9 -->
       <div class="video-card aos aos-delay-2">
-        <div class="rutube-video" data-rutube-id="b2cad5db6d08f4b7476b28c740a0a0bf" data-rutube-p="dk-P7QoI-ExEvlw3GenAsQ"></div>
+        <div class="rt-preview" data-id="b2cad5db6d08f4b7476b28c740a0a0bf" data-p="dk-P7QoI-ExEvlw3GenAsQ">
+          <img src="https://rutube.ru/api/video/b2cad5db6d08f4b7476b28c740a0a0bf/thumbnail/?redirect=1" alt="Отзыв 9" loading="lazy" onerror="this.style.display='none'">
+          <div class="rt-play"><span></span></div>
+        </div>
         <div class="video-label">▶ Отзыв 9</div>
       </div>
 
@@ -2788,6 +2810,34 @@ window.addEventListener('scroll', function () {
     }
   });
 }, { passive: true });
+
+/* ================================================================
+   RUTUBE: клик на превью → iframe без autoplay
+   Превью уже в HTML (<img> тег), никакого JS для генерации не нужно.
+   По клику вставляем iframe с autoplay=0, без allow="autoplay".
+   ================================================================ */
+document.querySelectorAll('.rt-preview').forEach(function(preview) {
+  preview.addEventListener('click', function() {
+    var id = preview.getAttribute('data-id');
+    var p  = preview.getAttribute('data-p') || '';
+    if (!id) return;
+
+    var src = 'https://rutube.ru/play/embed/' + id + '?autoplay=0';
+    if (p) src += '&p=' + encodeURIComponent(p);
+
+    var iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'fullscreen');  /* НЕТ autoplay */
+    iframe.setAttribute('frameborder', '0');
+
+    /* Убираем превью, вставляем плеер */
+    preview.querySelector('img').style.display  = 'none';
+    preview.querySelector('.rt-play').style.display = 'none';
+    preview.style.cursor = 'default';
+    preview.appendChild(iframe);
+  });
+});
 </script>
 
 </body>
