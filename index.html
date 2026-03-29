@@ -708,6 +708,51 @@
     }
     @media (max-width: 480px) { .company-features { grid-template-columns: 1fr; } }
 
+    /* Видео в секции компании */
+    .company-video-wrap {
+      grid-column: 1 / -1; /* на всю ширину грида */
+      margin-top: 8px;
+    }
+    .company-video-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--violet);
+      margin-bottom: 14px;
+    }
+    .company-video-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--violet), var(--red));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .company-video-wrap .video-card {
+      border: 1px solid rgba(124,63,168,0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(124,63,168,0.1);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .company-video-wrap .rt-preview {
+      background: #1A0A2E;
+    }
+    @media (max-width: 768px) {
+      .company-video-wrap .video-card {
+        max-width: 100%;
+      }
+    }
+
     .feature-card {
       background: #fff;
       border: 1px solid rgba(124,63,168,0.15);
@@ -1804,6 +1849,25 @@
           <span class="badge">🏆 ТКМ технологии</span>
           <span class="badge">💳 Ежедневные выплаты</span>
           <span class="badge">🔄 100% Кэшбэк при входе</span>
+        </div>
+      </div>
+
+      <!-- Видео о компании — на всю ширину между блоками -->
+      <div class="company-video-wrap aos">
+        <div class="company-video-label">
+          <span class="company-video-icon">▶</span>
+          Официальная презентация компании WHIEDA
+        </div>
+        <div class="video-card"
+             data-video-id="ccdb10c5a7dfbe27654eb936cb00899e"
+             data-p="eaJ-tpIPjjXD5aOxXTeJtg">
+          <div class="rt-preview">
+            <img src="https://rutube.ru/api/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbnail/?redirect=1&p=eaJ-tpIPjjXD5aOxXTeJtg"
+                 alt="Презентация компании WHIEDA"
+                 loading="lazy"
+                 onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/ccdb10c5a7dfbe27654eb936cb00899e/thumbs/m.jpg';">
+            <div class="rt-play"><span></span></div>
+          </div>
         </div>
       </div>
 
