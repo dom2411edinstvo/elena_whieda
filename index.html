@@ -2600,6 +2600,21 @@ inputMessage.addEventListener('input', function () {
 /* ================================================================
    ФОРМА КОНТАКТА
    ================================================================ */
+/* --- Telegram Bot --- */
+var TG_TOKEN   = '8633769126:AAEgZeq6RrOqshQTH0SzOgd1aL6BppUCeZ4';
+var TG_CHAT_ID = '5569439365';
+
+function sendToTelegram(text, onSuccess, onError) {
+  fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: TG_CHAT_ID, text: text, parse_mode: 'HTML' })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) { if (d.ok) { onSuccess(); } else { onError(d.description); } })
+  .catch(function(err) { onError(err); });
+}
+
 document.getElementById('contactForm').addEventListener('submit', function (e) {
   e.preventDefault();
   var name     = inputName.value.trim();
@@ -2619,16 +2634,46 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
     both: 'И здоровье, и доход', product: 'Просто попробовать продукт', '': 'Не указано'
   };
 
-  var body    = encodeURIComponent('Новая заявка с сайта!\n\nИмя: ' + name +
-    '\nКонтакт: ' + contact + '\nИнтерес: ' + (labels[interest] || 'Не указано') +
-    '\n\nВопрос/пожелание:\n' + (message || 'Не указано'));
-  var subject = encodeURIComponent('Заявка на созвон от ' + name);
-  window.location.href = 'mailto:lena.zaripova.1972@mail.ru?subject=' + subject + '&body=' + body;
+  var submitBtn = this.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Отправляем...';
 
-  setTimeout(function () {
-    document.getElementById('contactForm').style.display = 'none';
+  var tgText =
+    '📩 <b>Новая заявка с сайта!</b>\n\n' +
+    '👤 <b>Имя:</b> ' + name + '\n' +
+    '📞 <b>Контакт:</b> ' + contact + '\n' +
+    '🎯 <b>Интерес:</b> ' + (labels[interest] || 'Не указано') + '\n' +
+    '💬 <b>Вопрос:</b> ' + (message || 'Не указано') + '\n\n' +
+    '🌐 Сайт: elena-whieda';
+
+  var self = this;
+
+  function showSuccess() {
+    self.style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
-  }, 500);
+  }
+
+  function fallbackMailto() {
+    var body    = encodeURIComponent('Новая заявка с сайта!\n\nИмя: ' + name +
+      '\nКонтакт: ' + contact + '\nИнтерес: ' + (labels[interest] || 'Не указано') +
+      '\n\nВопрос/пожелание:\n' + (message || 'Не указано'));
+    var subject = encodeURIComponent('Заявка на созвон от ' + name);
+    var mailLink = document.createElement('a');
+    mailLink.href = 'mailto:lena.zaripova.1972@mail.ru?subject=' + subject + '&body=' + body;
+    mailLink.click();
+    showSuccess();
+  }
+
+  /* Если токен не настроен — сразу mailto */
+  if (TG_TOKEN === 'TELEGRAM_BOT_TOKEN') {
+    fallbackMailto();
+    return;
+  }
+
+  sendToTelegram(tgText, showSuccess, function() {
+    /* Telegram не сработал — резерв mailto */
+    fallbackMailto();
+  });
 });
 
 /* ================================================================
@@ -2663,17 +2708,43 @@ document.getElementById('modalForm').addEventListener('submit', function (e) {
   if (!name || name.length < 2)       { modalName.style.borderColor    = 'var(--red)'; modalName.focus();    return; }
   if (!contact || contact.length < 5) { modalContact.style.borderColor = 'var(--red)'; modalContact.focus(); return; }
 
-  var body    = encodeURIComponent('Запрос книги WHIEDA!\n\nИмя: ' + name + '\nКонтакт: ' + contact);
-  var subject = encodeURIComponent('Запрос книги WHIEDA от ' + name);
-  window.location.href = 'mailto:lena.zaripova.1972@mail.ru?subject=' + subject + '&body=' + body;
+  var submitBtn = this.querySelector('button[type="submit"]');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Отправляем...'; }
 
-  this.innerHTML =
+  var tgText =
+    '📖 <b>Запрос книги WHIEDA!</b>\n\n' +
+    '👤 <b>Имя:</b> ' + name + '\n' +
+    '📞 <b>Контакт:</b> ' + contact + '\n\n' +
+    '🌐 Сайт: elena-whieda';
+
+  var self = this;
+  var successHTML =
     '<div style="text-align:center;padding:20px;">' +
       '<div style="font-size:2.5rem;margin-bottom:12px;">📖</div>' +
       '<strong style="color:var(--yellow-light);font-size:1.1rem;display:block;margin-bottom:8px;">Отлично!</strong>' +
       '<p style="color:rgba(255,255,255,0.6);font-size:0.88rem;line-height:1.7;">Елена отправит вам книгу-презентацию в ближайшее время.<br>Ждите сообщения!</p>' +
       '<a href="https://t.me/Lena_Zaripowa" target="_blank" class="btn-gold" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;">✈️ Написать в Telegram</a>' +
     '</div>';
+
+  function showModalSuccess() { self.innerHTML = successHTML; }
+
+  function fallbackModalMailto() {
+    var body    = encodeURIComponent('Запрос книги WHIEDA!\n\nИмя: ' + name + '\nКонтакт: ' + contact);
+    var subject = encodeURIComponent('Запрос книги WHIEDA от ' + name);
+    var mailLink = document.createElement('a');
+    mailLink.href = 'mailto:lena.zaripova.1972@mail.ru?subject=' + subject + '&body=' + body;
+    mailLink.click();
+    showModalSuccess();
+  }
+
+  if (TG_TOKEN === 'TELEGRAM_BOT_TOKEN') {
+    fallbackModalMailto();
+    return;
+  }
+
+  sendToTelegram(tgText, showModalSuccess, function() {
+    fallbackModalMailto();
+  });
 });
 
 /* ================================================================
