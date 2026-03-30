@@ -588,6 +588,7 @@
     }
 
     .about-photo-box:not(:first-child) { height: 160px; }
+    .about-photo-box:last-child { height: 160px; }
 
     .about-photo-box img {
       width: 100%;
@@ -960,11 +961,14 @@
 
     .results-photos {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-top: 40px;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 900px) {
+      .results-photos { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
       .results-photos { grid-template-columns: 1fr; }
     }
 
@@ -1758,6 +1762,9 @@
         <div class="about-photo-box">
           <img src="img/4.jpg" alt="Елена Зарипова — фото 4" loading="lazy" />
         </div>
+        <div class="about-photo-box">
+          <img src="img/9.jpg" alt="Елена Зарипова — фото 5" loading="lazy" />
+        </div>
       </div>
 
       <div class="about-text aos">
@@ -2134,6 +2141,9 @@
       <div class="result-photo aos aos-delay-3">
         <img src="img/7.jpg" alt="Результат применения WHIEDA 3" loading="lazy" />
       </div>
+      <div class="result-photo aos aos-delay-4">
+        <img src="img/8.jpg" alt="Результат применения WHIEDA 4" loading="lazy" />
+      </div>
     </div>
   </div>
 </section>
@@ -2244,6 +2254,20 @@
           <div class="rt-play"><span></span></div>
         </div>
         <div class="video-label">▶ Отзыв 9</div>
+      </div>
+
+      <!-- Видео 10 -->
+
+
+      <!-- Видео 11 -->
+      <div class="video-card" data-video-id="a863e19c4e50a741cb93c2b98cf010f8" data-p="">
+        <div class="rt-preview">
+          <img src="https://rutube.ru/api/video/a863e19c4e50a741cb93c2b98cf010f8/thumbnail/?redirect=1"
+               alt="Отзыв 11" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='https://pic.rutube.ru/video/a863e19c4e50a741cb93c2b98cf010f8/thumbs/m.jpg';">
+          <div class="rt-play"><span></span></div>
+        </div>
+        <div class="video-label">▶ Отзыв 10</div>
       </div>
 
     </div>
