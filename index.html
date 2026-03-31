@@ -321,8 +321,8 @@
 
     .hero-photo-frame {
       position: relative;
-      width: 401px;
-      height: 486px;
+      width: 440px;
+      height: 534px;
       max-width: 100%;
     }
 
@@ -993,6 +993,114 @@
     }
 
     /* ===== VIDEO REVIEWS SECTION ===== */
+    /* ===== PRODOCTORS REVIEWS ===== */
+    .prodoctors-block {
+      margin-bottom: 56px;
+    }
+    .prodoctors-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(176,111,224,0.25);
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+    .prodoctors-label span { color: var(--yellow-light); }
+    .prodoctors-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) {
+      .prodoctors-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .prodoctors-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    }
+    .prodoctors-photo {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(176,111,224,0.2);
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .prodoctors-photo:hover {
+      border-color: rgba(245,197,24,0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .prodoctors-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 4/3;
+    }
+
+    /* Лайтбокс для фото отзывов */
+    .photo-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .photo-lightbox.open { display: flex; }
+    .photo-lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.28); }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+
     .reviews-section {
       padding: 90px 24px;
       background: linear-gradient(170deg, #12071F 0%, #1A0A2E 50%, #2D1B4E 100%);
@@ -1778,9 +1886,16 @@
         <div class="section-line"></div>
 
         <p>
-          Меня зовут Зарипова Лена. Я врач-терапевт с 30-летним стажем, увлечённая как традиционной,
+          Меня зовут Зарипова Лена. Я врач-терапевт с 30-летним стажем, отличник здравоохранения
+          Республики Башкортостан с высшей квалификационной категорией. Увлечена как традиционной,
           так и нетрадиционной медициной. Благодаря знаниям в области альтернативного оздоровления
           я восстановила здоровье себе и своим близким — и теперь делюсь этим с другими.
+        </p>
+
+        <p>
+          Помимо медицины, я являюсь квантовым психологом. Работая врачом, я также развивалась
+          в сфере психологии, публичных выступлений и онлайн-образования — что даёт мне уникальное
+          понимание людей и их потребностей.
         </p>
 
         <div class="quote-block">
@@ -1788,27 +1903,35 @@
         </div>
 
         <p>
-          Сейчас я вхожу в сообщество WHIEDA, где комплексно работают с мышлением, коммуникациями,
+          Сегодня я — Директор компании WHIEDA, где комплексно работают с мышлением, коммуникациями,
           уверенностью и здоровьем. Есть направление по китайской медицине и современным технологиям
           для оздоровления и долголетия. Здесь можно просто заботиться о себе, а можно построить свой бизнес.
         </p>
 
         <div class="about-highlights">
           <div class="highlight-item">
+            <div class="highlight-icon">🏅</div>
+            <div class="highlight-text">Отличник здравоохранения Республики Башкортостан, высшая квалификационная категория</div>
+          </div>
+          <div class="highlight-item">
             <div class="highlight-icon">🩺</div>
             <div class="highlight-text">Врач-терапевт с 30-летним стажем, знаток традиционной и нетрадиционной медицины</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">🧠</div>
+            <div class="highlight-text">Квантовый психолог — уникальное понимание людей через психологию и публичные выступления</div>
           </div>
           <div class="highlight-item">
             <div class="highlight-icon">🌿</div>
             <div class="highlight-text">Личный опыт оздоровления: укрепление иммунитета, восстановление кожи, устранение нейродермита</div>
           </div>
           <div class="highlight-item">
-            <div class="highlight-icon">💫</div>
-            <div class="highlight-text">Вхожу в сильное сообщество, где развиваются и в доходе, и как личность</div>
+            <div class="highlight-icon">🏆</div>
+            <div class="highlight-text">Директор компании WHIEDA — достигла лидерского статуса и строит команду единомышленников</div>
           </div>
           <div class="highlight-item">
             <div class="highlight-icon">🎯</div>
-            <div class="highlight-text">Моя цель — выйти на доход 200 000 руб/мес, омолаживаясь и помогая другим</div>
+            <div class="highlight-text">Цель — выйти на доход 200 000 ₽/мес, омолаживаясь и помогая другим</div>
           </div>
         </div>
       </div>
@@ -1816,49 +1939,7 @@
   </div>
 </section>
 
-<!-- ====================================================== ACHIEVEMENTS -->
-<section class="section achievements-bg">
-  <div class="section-inner">
-    <div style="text-align:center;" class="aos">
-      <span class="section-tag" style="color:var(--yellow-light);">Достижения и опыт</span>
-      <h2 class="section-title" style="color:#fff;">Масштаб, который говорит<br>сам за себя</h2>
-      <div class="section-line" style="margin:0 auto 24px;background:linear-gradient(90deg,var(--red),var(--yellow));"></div>
-      <p class="section-desc" style="color:rgba(255,255,255,0.55);margin:0 auto;">
-        Работая врачом, Лена также развивалась в сфере психологии, публичных выступлений
-        и онлайн-образования — что даёт ей уникальное понимание людей и их потребностей.
-      </p>
-    </div>
 
-    <div class="achievements-grid">
-
-      <div class="achievement-card aos aos-delay-2">
-        <div class="achievement-icon">🎤</div>
-        <h3>Крупнейшие сцены России</h3>
-        <p>Выступала на главных площадках страны: ВТБ Арена, Крокус Сити Холл, ВТБ Академия, Голден Роуз, Сочи Роза Холл. Сотрудничала с Институтом Косыгина.</p>
-      </div>
-      <div class="achievement-card aos aos-delay-3">
-        <div class="achievement-icon">⭐</div>
-        <h3>Работа с первыми лицами</h3>
-        <p>Работала с Филиппом Киркоровым, Любовью Успенской, Ани Лорак, Алёной Блин, блогерами Владом Бермудой, Кристиной Егиазаровой и другими звёздами российской эстрады.</p>
-      </div>
-      <div class="achievement-card aos aos-delay-4">
-        <div class="achievement-icon">📺</div>
-        <h3>Телевидение</h3>
-        <p>Телеведущая передачи «Путь к себе» в рубрике «Духовный наставник». Гость «Comedy Club». Участница передач «ДНК», «Мужское/Женское», «Детектор лжи».</p>
-      </div>
-      <div class="achievement-card aos aos-delay-1">
-        <div class="achievement-icon">🌍</div>
-        <h3>Международная деятельность</h3>
-        <p>В 2022–2023 гг. жила в Дубае, где организовала своё комьюнити и офлайн-ретритный центр. Создала международные связи и опыт управления проектами за рубежом.</p>
-      </div>
-      <div class="achievement-card aos aos-delay-2">
-        <div class="achievement-icon">🏛️</div>
-        <h3>Государственная Дума РФ</h3>
-        <p>9 декабря 2024 года стала участником круглого стола Государственной Думы РФ совместно с депутатом ГД Александром Спиридоновым. Признание на государственном уровне.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ====================================================== COMPANY -->
 <section id="company" class="section" style="background:#fff;">
@@ -2153,8 +2234,37 @@
 <section id="reviews" class="reviews-section">
   <div class="section-inner">
     <span class="section-tag" style="color:var(--yellow-light);">Живые истории</span>
-    <h2 class="reviews-title">Видеоотзывы</h2>
-    <p class="reviews-subtitle">Люди рассказывают о своих результатах со здоровьем и доходом</p>
+    <h2 class="reviews-title">Отзывы и видеоотзывы</h2>
+    <p class="reviews-subtitle">Реальные люди рассказывают о своих результатах со здоровьем и доходом</p>
+
+    <!-- ОТЗЫВЫ С ПРОДОКТОРОВ -->
+    <div class="prodoctors-block aos">
+      <div class="prodoctors-label">
+        <span>⭐</span> Отзывы с сайта ПроДокторов
+      </div>
+      <div class="prodoctors-grid">
+        <div class="prodoctors-photo" onclick="openLightbox(0)">
+          <img src="img/12.jpg" alt="Отзыв с ПроДокторов 1" loading="lazy" decoding="async" />
+        </div>
+        <div class="prodoctors-photo" onclick="openLightbox(1)">
+          <img src="img/13.jpg" alt="Отзыв с ПроДокторов 2" loading="lazy" decoding="async" />
+        </div>
+        <div class="prodoctors-photo" onclick="openLightbox(2)">
+          <img src="img/14.jpg" alt="Отзыв с ПроДокторов 3" loading="lazy" decoding="async" />
+        </div>
+        <div class="prodoctors-photo" onclick="openLightbox(3)">
+          <img src="img/15.jpg" alt="Отзыв с ПроДокторов 4" loading="lazy" decoding="async" />
+        </div>
+        <div class="prodoctors-photo" onclick="openLightbox(4)">
+          <img src="img/16.jpg" alt="Отзыв с ПроДокторов 5" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ВИДЕООТЗЫВЫ -->
+    <div class="prodoctors-label" style="margin-bottom:20px;">
+      <span>🎬</span> Видеоотзывы
+    </div>
 
     <div class="video-reviews-grid">
 
@@ -2528,6 +2638,14 @@
 </div>
 
 <!-- MODAL: Presentation -->
+<!-- ЛАЙТБОКС для фото ПроДокторов -->
+<div class="photo-lightbox" id="photoLightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="lightboxPrev()">‹</button>
+  <img id="lightboxImg" src="" alt="Отзыв с ПроДокторов" />
+  <button class="lightbox-nav lightbox-next" onclick="lightboxNext()">›</button>
+</div>
+
 <div class="modal-overlay" id="presentationModal" onclick="closePresentationModal(event)">
   <div class="modal-box">
     <button class="modal-close" onclick="closePresentationModal()">✕</button>
@@ -2819,6 +2937,42 @@ window.addEventListener('scroll', function () {
     }
   });
 }, { passive: true });
+
+/* ================================================================
+   ЛАЙТБОКС для фото ПроДокторов
+   ================================================================ */
+var lightboxPhotos = ['img/12.jpg','img/13.jpg','img/14.jpg','img/15.jpg','img/16.jpg'];
+var lightboxIndex  = 0;
+var lightboxEl     = document.getElementById('photoLightbox');
+var lightboxImg    = document.getElementById('lightboxImg');
+
+function openLightbox(idx) {
+  lightboxIndex = idx;
+  lightboxImg.src = lightboxPhotos[lightboxIndex];
+  lightboxEl.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightboxEl.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lightboxPrev() {
+  lightboxIndex = (lightboxIndex - 1 + lightboxPhotos.length) % lightboxPhotos.length;
+  lightboxImg.src = lightboxPhotos[lightboxIndex];
+}
+function lightboxNext() {
+  lightboxIndex = (lightboxIndex + 1) % lightboxPhotos.length;
+  lightboxImg.src = lightboxPhotos[lightboxIndex];
+}
+lightboxEl.addEventListener('click', function(e) {
+  if (e.target === lightboxEl) closeLightbox();
+});
+document.addEventListener('keydown', function(e) {
+  if (!lightboxEl.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  lightboxPrev();
+  if (e.key === 'ArrowRight') lightboxNext();
+  if (e.key === 'Escape')     closeLightbox();
+});
 
 /* ================================================================
    RUTUBE — точно как на рабочем сайте:
