@@ -320,8 +320,8 @@
 
     .hero-photo-frame {
       position: relative;
-      width: 380px;
-      height: 460px;
+      width: 456px;
+      height: 552px;
       max-width: 100%;
     }
 
@@ -336,7 +336,8 @@
     .photo-placeholder img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
       display: block;
     }
 
@@ -412,7 +413,7 @@
 
       .hero-photo-frame {
         width: auto;
-        height: 260px;
+        height: 312px;
         max-width: 100%;
       }
 
@@ -501,7 +502,7 @@
 
     @media (max-width: 420px) {
       .hero-content { padding: 66px 14px 12px; }
-      .hero-photo-frame { height: 230px; }
+      .hero-photo-frame { height: 276px; }
       .hero-text h1 { font-size: 1.75rem; }
       .hero-subtitle { font-size: 0.82rem; }
       .hero-desc { font-size: 0.71rem; }
@@ -512,7 +513,7 @@
 
     @media (max-width: 360px) {
       .hero-content { padding: 64px 12px 10px; }
-      .hero-photo-frame { height: 195px; }
+      .hero-photo-frame { height: 234px; }
       .hero-text h1 { font-size: 1.55rem; }
       .hero-subtitle { font-size: 0.76rem; }
       .hero-desc { font-size: 0.66rem; line-height: 1.5; }
@@ -1763,7 +1764,10 @@
           <img src="img/4.jpg" alt="Елена Зарипова — фото 4" loading="lazy" />
         </div>
         <div class="about-photo-box">
-          <img src="img/9.jpg" alt="Елена Зарипова — фото 5" loading="lazy" />
+          <img src="img/9.jpg" alt="Лена Зарипова — фото 5" loading="lazy" />
+        </div>
+        <div class="about-photo-box">
+          <img src="img/10.jpg" alt="Лена Зарипова — фото 6" loading="lazy" />
         </div>
       </div>
 
@@ -1825,11 +1829,7 @@
     </div>
 
     <div class="achievements-grid">
-      <div class="achievement-card aos aos-delay-1">
-        <div class="achievement-icon">🎓</div>
-        <h3>Академия «Мастер разборов»</h3>
-        <p>В 2020 году стала одним из основателей международной онлайн-академии. В должности декана обучила 15 000 студентов расстановочным психологическим разборам. Оборот за 1,5 года — 1 млрд рублей.</p>
-      </div>
+
       <div class="achievement-card aos aos-delay-2">
         <div class="achievement-icon">🎤</div>
         <h3>Крупнейшие сцены России</h3>
